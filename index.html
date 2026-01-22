@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyCOACH-MyTEAM | Next Generation Sports Solution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; color: #fff; background-color: #050a15; scroll-behavior: smooth; }
+        #info-modal { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); }
+        .hero-section { position: relative; min-height: 95vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1504450758481-7338eba7524a?q=80&w=2069&auto=format&fit=crop');
+            background-size: cover; background-position: center; filter: brightness(0.25) saturate(1.5); transform: scale(1.05);
+        }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(30,58,138,0.1) 0%, rgba(5,10,21,1) 100%); }
+        .cool-title { font-family: 'Montserrat', sans-serif; letter-spacing: -0.02em; line-height: 1; background: linear-gradient(180deg, #FFFFFF 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-tab { position: relative; transition: color 0.3s; text-decoration: none; }
+        .nav-tab::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #3B82F6; transition: width 0.3s; }
+        .nav-tab:hover::after { width: 100%; }
+        .btn-modern { position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); width: 100%; }
+        .btn-modern:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .btn-coach { background: rgba(255, 255, 255, 0.05); }
+        .btn-coach:hover { background: #fff; color: #000; }
+        .btn-team { background: rgba(30, 64, 175, 0.2); border-color: rgba(59, 130, 246, 0.5); }
+        .btn-team:hover { background: #2563eb; }
+        .btn-supporter { background: rgba(194, 65, 12, 0.2); border-color: rgba(249, 115, 22, 0.5); }
+        .btn-supporter:hover { background: #f97316; }
+        .service-card, .profile-card, .price-card, .flow-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s ease; border-radius: 2rem; }
+        .modal-container { background: #0a1122; border: 1px solid rgba(255,255,255,0.1); }
+        .modal-sidebar-btn { text-align: left; padding: 1rem 1.5rem; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; color: #64748b; transition: all 0.3s; border-left: 3px solid transparent; }
+        .modal-sidebar-btn.active { color: #fff; border-left-color: #3B82F6; background: rgba(59, 130, 246, 0.15); }
+        
+        .flow-step-circle { width: 32px; height: 32px; border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: #3B82F6; background: rgba(59, 130, 246, 0.1); flex-shrink: 0; }
+        .flow-line { width: 1px; flex-grow: 1; background: linear-gradient(to bottom, #3B82F6 0%, transparent 100%); margin: 4px 0; }
+    </style>
+</head>
+<body>
+
+    <header class="fixed w-full z-50 bg-[#050a15]/80 backdrop-blur-xl border-b border-white/5">
+        <div class="container mx-auto px-8 py-5 flex justify-between items-center">
+            <div class="text-xl font-black tracking-tighter text-white italic shrink-0">
+                <a href="#">MyCOACH<span class="text-blue-500 mx-1">-</span>MyTEAM</a>
+            </div>
+            <nav class="hidden lg:flex space-x-10 absolute left-1/2 -translate-x-1/2">
+                <a href="#service" class="nav-tab text-[10px] uppercase tracking-[0.3em] font-bold text-gray-300">SERVICE</a>
+                <a href="#flow" class="nav-tab text-[10px] uppercase tracking-[0.3em] font-bold text-gray-300">FLOW</a>
+                <a href="#vision" class="nav-tab text-[10px] uppercase tracking-[0.3em] font-bold text-gray-300">VISION</a>
+                <a href="#members" class="nav-tab text-[10px] uppercase tracking-[0.3em] font-bold text-gray-300">MEMBERS</a>
+                <a href="#pricing" class="nav-tab text-[10px] uppercase tracking-[0.3em] font-bold text-gray-300">PRICING</a>
+            </nav>
+            <div class="shrink-0"><a href="https://mycoach-myteam.com/" class="text-[10px] text-white uppercase tracking-widest font-bold px-6 py-2 border border-white/20 rounded-full hover:bg-white hover:text-black transition-all">Login</a></div>
+        </div>
+    </header>
+
+    <section class="hero-section text-center text-white">
+        <div class="hero-bg"></div><div class="hero-overlay"></div>
+        <div class="hero-content px-6 z-10 w-full">
+            <h1 class="cool-title text-5xl md:text-[110px] font-black italic mb-6">MyCOACH<span class="text-blue-500">-</span>MyTEAM</h1>
+            <p class="text-sm md:text-xl mb-20 tracking-[0.2em] font-light text-blue-100/70">部活動・スポーツチーム運営のトータルソリューションサービス</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-start">
+                <a href="https://mycoach-myteam.com/" target="_blank" class="btn-modern btn-coach px-8 py-12 rounded-2xl flex flex-col items-center justify-center min-h-[160px]">
+                    <span class="text-2xl font-black italic">コーチ登録の方</span>
+                </a>
+                <div class="flex flex-col gap-4">
+                    <a href="https://mycoach-myteam.com/" target="_blank" class="btn-modern btn-team px-8 py-12 rounded-2xl flex flex-col items-center justify-center text-white min-h-[160px]">
+                        <span class="text-2xl font-black italic">チーム登録の方</span>
+                    </a>
+                    <a href="https://mycoach-myteam.com/" target="_blank" class="text-[12px] font-black tracking-[0.2em] text-blue-400 hover:text-white transition-all flex items-center justify-center gap-2 group">
+                        <span class="w-4 h-[1px] bg-blue-400/40 group-hover:bg-white transition-all"></span>保護者 / 選手ログイン<span class="w-4 h-[1px] bg-blue-400/40 group-hover:bg-white transition-all"></span>
+                    </a>
+                </div>
+                <a href="https://ymozfleet-creator.github.io/-/" target="_blank" class="btn-modern btn-supporter px-8 py-12 rounded-2xl flex flex-col items-center justify-center text-white min-h-[160px]">
+                    <span class="text-2xl font-black italic">サポーター登録の方</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="service" class="py-32 bg-[#050a15]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-24">
+                <h2 class="text-7xl font-black italic mb-2 tracking-tighter uppercase">SERVICE</h2>
+                <p class="text-blue-500 font-bold tracking-[0.4em] text-[10px] uppercase">主な機能のご紹介</p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="service-card p-10 bg-[#0d1526]">
+                    <h3 class="text-3xl font-black italic mb-10 flex items-center"><span class="w-1.5 h-8 bg-blue-500 mr-4"></span>コーチ登録の方</h3>
+                    <div class="space-y-8">
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">チームとのマッチング機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">最適なコーチとチームを繋ぐマッチングプラットフォーム</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">メッセージ機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">マッチング後ダイレクトメッセージで簡単にコミュニケーションが可能</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">オンライン決済機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">エスクロー決済で業務完了後、即時入金されます。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-card p-10 bg-[#0d1526]">
+                    <h3 class="text-3xl font-black italic mb-10 flex items-center"><span class="w-1.5 h-8 bg-blue-500 mr-4"></span>チーム登録の方</h3>
+                    <div class="space-y-8 text-sm">
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">コーチとのマッチング機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">最適なチームとコーチを繋ぐマッチングプラットフォーム</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">チーム同士のマッチング機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">練習試合や、合同練習先の募集、連絡をスムーズに実現</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">サポーターへの支援募集機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">定型文を事務局へ送付するだけで自動でサポーターへの支援募集が開催されます</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">月謝・会費管理機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">自動徴収と未納管理をデジタル化。</p>
+                        </div>
+                        <div class="bg-[#1a243a] p-3 rounded-lg text-center">
+                            <p class="text-[9px] text-blue-400 font-bold italic">（保護者/選手の方が使える機能）</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">食事・トレーニング管理機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">AIによる食事の自動分析と筋トレ/体重管理機能</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-card p-10 bg-[#0d1526]">
+                    <h3 class="text-3xl font-black italic mb-10 flex items-center"><span class="w-1.5 h-8 bg-orange-500 mr-4"></span>サポーター登録の方</h3>
+                    <div class="space-y-8">
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-orange-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">チーム支援機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">MyTEAM登録チームが求める支援をサポート</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center mb-1">
+                                <span class="w-3 h-3 bg-orange-500 rounded-full mr-3"></span>
+                                <h4 class="font-bold text-white text-lg">サンクスメッセージ機能</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 ml-6">支援したチームからのお礼メッセージが掲載</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="flow" class="py-32 bg-[#050a15]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-24">
+                <h2 class="text-7xl font-black italic mb-2 tracking-tighter uppercase">FLOW</h2>
+                <p class="text-blue-500 font-bold tracking-[0.4em] text-[10px] uppercase">サービス利用の流れ</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
+                <div class="flow-card p-10 bg-[#0d1526]/50">
+                    <h3 class="text-xl font-black italic mb-12 text-blue-400 border-b border-blue-400/20 pb-4">マッチング機能：コーチ/チーム</h3>
+                    <div class="space-y-0">
+                        <div class="flex gap-6 h-24">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle">01</div>
+                                <div class="flow-line"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">コーチ・チームとして登録</h4>
+                                <p class="text-[11px] text-gray-500">プラットフォームへのアカウント作成</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 h-24">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle">02</div>
+                                <div class="flow-line"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">基本情報・stripe決済登録</h4>
+                                <p class="text-[11px] text-gray-500">プロフィールと決済システム登録</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 h-24">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle">03</div>
+                                <div class="flow-line"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">マッチング</h4>
+                                <p class="text-[11px] text-gray-500">マッチングしたいコーチ/チームを見つけ指導を依頼</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle">04</div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">実施・精算</h4>
+                                <p class="text-[11px] text-gray-500">予約調整後、業務実施。完了後はシステムを通じて即日精算</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-card p-10 bg-[#0d1526]/50">
+                    <h3 class="text-xl font-black italic mb-12 text-blue-400 border-b border-blue-400/20 pb-4">チーム機能：月謝管理</h3>
+                    <div class="space-y-0">
+                        <div class="flex gap-6 h-24">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle">01</div>
+                                <div class="flow-line"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">チーム登録</h4>
+                                <p class="text-[11px] text-gray-500">管理者アカウントを作成</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 h-24">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle">02</div>
+                                <div class="flow-line"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">専用コードを取得・送付</h4>
+                                <p class="text-[11px] text-gray-500">招待コードを保護者/選手へ共有</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 h-24">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle">03</div>
+                                <div class="flow-line"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">決済登録</h4>
+                                <p class="text-[11px] text-gray-500">支払い側の情報を登録</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle">04</div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">運用開始</h4>
+                                <p class="text-[11px] text-gray-500">自動徴収と未納管理がスタート</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-card p-10 bg-[#0d1526]/50">
+                    <h3 class="text-xl font-black italic mb-12 text-orange-400 border-b border-orange-400/20 pb-4">サポーター支援機能</h3>
+                    <div class="space-y-0">
+                        <div class="flex gap-6 h-24">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle" style="color:#f97316; border-color:#f97316; background:rgba(249,115,22,0.1)">01</div>
+                                <div class="flow-line" style="background: linear-gradient(to bottom, #f97316 0%, transparent 100%)"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">チーム情報登録</h4>
+                                <p class="text-[11px] text-gray-500">チーム側で欲しいものリストから支援を選定し登録</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 h-24">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle" style="color:#f97316; border-color:#f97316; background:rgba(249,115,22,0.1)">02</div>
+                                <div class="flow-line" style="background: linear-gradient(to bottom, #f97316 0%, transparent 100%)"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">サポーター様による選定</h4>
+                                <p class="text-[11px] text-gray-500">支援したい取り組み項目を選定</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 h-24">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle" style="color:#f97316; border-color:#f97316; background:rgba(249,115,22,0.1)">03</div>
+                                <div class="flow-line" style="background: linear-gradient(to bottom, #f97316 0%, transparent 100%)"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">オンライン決済(サポーター様)</h4>
+                                <p class="text-[11px] text-gray-500">stripe決済で匿名及び記名での発送が可能</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="flex flex-col items-center">
+                                <div class="flow-step-circle" style="color:#f97316; border-color:#f97316; background:rgba(249,115,22,0.1)">04</div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">発送/到着・サンクスメッセージ</h4>
+                                <p class="text-[11px] text-gray-500">OB/OG/支援到着後、チーム側からサンクスカードが発行され確認できます</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision" class="py-32 bg-[#050a15] text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-7xl font-black italic mb-2 uppercase">VISION</h2>
+            <p class="text-blue-500 font-bold tracking-[0.4em] text-[10px] mb-16 uppercase">目指す姿</p>
+            <p class="text-3xl md:text-5xl font-black italic leading-[1.6] max-w-6xl mx-auto">価値ある経験を<br>時間や場所の制約を越えて、<br>未来へ伝承できるプラットフォームを作りたい</p>
+        </div>
+    </section>
+
+<section id="members" class="py-32 bg-[#050a15] text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-7xl font-black italic mb-2 uppercase">MEMBERS</h2>
+            <p class="text-blue-500 font-bold tracking-[0.4em] text-[10px] mb-12 uppercase">登録コーチとチーム</p>
+            <div class="flex justify-center space-x-12 mb-20 border-b border-white/10 w-fit mx-auto pb-2">
+                <button onclick="switchMemberTab('coaches')" id="tab-coaches" class="text-xs font-black tracking-widest text-white border-b-2 border-blue-500 pb-2">COACHES</button>
+                <button onclick="switchMemberTab('teams')" id="tab-teams" class="text-xs font-black tracking-widest text-gray-500 pb-2">TEAMS</button>
+            </div>
+            
+            <div id="content-coaches" class="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-7xl mx-auto">
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+            </div>
+            
+            <div id="content-teams" class="hidden grid grid-cols-2 md:grid-cols-5 gap-6 max-w-7xl mx-auto">
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+                <div class="profile-card aspect-[3/4] border-dashed border-white/10 flex items-center justify-center italic text-[10px] text-gray-600 font-bold uppercase">Coming Soon</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-32 bg-[#050a15] text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-7xl font-black italic mb-2 uppercase">PRICING</h2>
+            <p class="text-blue-500 font-bold tracking-[0.4em] text-[10px] mb-20 uppercase">料金プラン</p>
+            <div class="max-w-6xl mx-auto price-card p-20 border-white/10 bg-[#0d1526]/50">
+                <div class="inline-block px-6 py-2 border border-blue-500 rounded-full text-blue-500 text-[10px] font-black tracking-widest mb-12">FREE TO START</div>
+                <div class="flex justify-center items-center space-x-12 mb-12">
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm font-bold mb-4">登録料</p>
+                        <p class="text-7xl font-black italic">¥0</p>
+                    </div>
+                    <div class="h-16 w-[1px] bg-white/10"></div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm font-bold mb-4">基本利用料</p>
+                        <p class="text-7xl font-black italic">¥0</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm leading-loose mb-4">MyCOACH-MyTEAMは、すべてのコーチとチームがスムーズに活動を開始できるよう、初期費用および月額基本料を無料で提供しています。</p>
+                <p class="text-gray-600 text-[10px] italic">※一部、決済システム利用時や特定機能においてシステム手数料が発生いたします。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#050a15] text-white pt-24 pb-12 border-t border-white/5 text-center">
+        <div class="container mx-auto px-6">
+            <div class="text-3xl md:text-4xl font-black mb-8 italic tracking-tighter">MyCOACH<span class="text-blue-500">-</span>MyTEAM</div>
+            <div class="flex justify-center space-x-8 mb-12">
+                <a href="https://www.instagram.com/mycoach_myteam/" target="_blank" class="text-gray-400 hover:text-white transition-all text-2xl"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://x.com/mycoach_myteam" target="_blank" class="text-gray-400 hover:text-white transition-all text-xl"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+            <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-16 max-w-4xl mx-auto">
+                <a href="https://ymozfleet-creator.github.io/Ark/" target="_blank" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest no-underline hover:text-white">運営会社</a>
+                <button onclick="openInfoModal('privacy')" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest hover:text-white">プライバシーポリシー</button>
+                <button onclick="openInfoModal('tokusho')" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest hover:text-white">特定商取引法に基づく表示</button>
+                <button onclick="openInfoModal('terms')" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest hover:text-white">利用規約</button>
+                <button onclick="openInfoModal('contact')" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest hover:text-white">お問い合わせ</button>
+            </div>
+            <p class="text-gray-600 text-[9px] tracking-widest uppercase">&copy; 2026 MyCOACH-MyTEAM All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div id="info-modal" class="flex items-center justify-center p-4">
+        <div class="modal-container w-full max-w-5xl h-[85vh] rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row relative text-left">
+            <button onclick="closeModal()" class="absolute top-6 right-8 text-gray-500 hover:text-white text-2xl z-20">✕</button>
+            <div class="w-full md:w-64 bg-[#0d1526] border-r border-white/5 py-12 flex flex-col shrink-0">
+                <button onclick="switchModalTab('privacy')" id="m-btn-privacy" class="modal-sidebar-btn active">PRIVACY POLICY</button>
+                <button onclick="switchModalTab('tokusho')" id="m-btn-tokusho" class="modal-sidebar-btn">LEGAL NOTICE</button>
+                <button onclick="switchModalTab('terms')" id="m-btn-terms" class="modal-sidebar-btn">TERMS</button>
+                <button onclick="switchModalTab('contact')" id="m-btn-contact" class="modal-sidebar-btn">CONTACT</button>
+            </div>
+            <div class="flex-1 p-10 md:p-16 overflow-y-auto bg-[#0a1122]">
+                <div id="m-content-privacy" class="modal-body active">
+                    <h2 class="text-2xl font-black mb-8 border-l-4 border-blue-600 pl-4 italic">プライバシーポリシー</h2>
+                    <div class="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap">当社は、スポーツ指導者マッチング及びチーム管理システム「MyCOACH-MyTEAM」における個人情報の取り扱いを以下の通り定めます。
+1. 収集する情報
+本サービスの提供（指導者紹介、チーム管理、および備品支援サービス）のため、以下の情報を取得します。
+* 基本情報： 氏名、生年月日、連絡先、公的証明書、指導資格・実績
+* チーム情報： 団体名、部員数、Amazonほしい物リストのURL
+* 取引・活動情報： 指導契約、月謝決済状況、施設予約履歴、メッセージ履歴
+* 支援履歴： ほしい物リストに基づき提供された物品の履歴
+* システム情報： 端末情報、アクセスログ、Cookie情報
+2. 利用目的
+取得した情報は、以下の目的で利用します。
+* マッチング・管理： 指導者検索、月謝・部費の集金代行、施設予約の提供
+* 部活動支援： チームが公開した「Amazonほしい物リスト」内の物品の購入・寄付・上乗せ支援の実行
+* 決済・清算： 手数料（9%〜20%）の計算、指導料の精算・送金
+* サポート： 問い合わせ対応、新機能開発、不正利用の防止
+3. 第三者への提供
+以下の場合を除き、個人情報を第三者に提供しません。
+* マッチング時： 契約履行のため、指導者とチーム間で相互に必要な情報を開示します。
+* 決済代行： Stripe等の決済代行業者へ、決済に必要な情報を提供します。
+* 支援実行時： Amazon等のECサイトを通じた物品購入・配送のため、配送業者や販売元に必要な情報（送付先等）を提供します。
+* 地域連携： 練習試合調整等で、相手方チームに必要な情報を開示します。
+4. セキュリティと権利
+* 安全管理： 不正アクセスや漏えい防止のため、適切なセキュリティ対策を講じます。
+* 開示・訂正： お客様はご自身の情報の開示・訂正を請求できます（開示手数料：2,000円）。
+5. 窓口
+MyCOACH-MyTEAM 個人情報担当者
+* 住所： 〒165-0023 東京都中野区江原町2-13-13 
+* メール： kanri@mycoach-myteam.com</div>
+                </div>
+                <div id="m-content-tokusho" class="modal-body hidden">
+                    <h2 class="text-2xl font-black mb-8 border-l-4 border-blue-600 pl-4 italic">特定商取引法に基づく表記</h2>
+                    <div class="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap">事業者の名称
+MyCOACH-MyTEAM 
+事業者の所在地
+郵便番号：165-0023 住所：東京都中野区江原町2-13-13
+事業者の連絡先
+メールアドレス：kanri@mycoach-myteam.com 電話番号：070-8492-2277 営業時間：平日9:00～18:00 定休日：土日祝日、年末年始（12月30日～1月3日）
+サービス名・事業内容
+MyCOACH-MyTEAM
+* スポーツ指導者マッチングおよび契約管理
+* チーム月謝・部費の集集金代行および管理システムの提供
+* 施設空き情報確認・予約・共同利用調整
+* Amazonほしい物リストを活用した部活動支援（物品提供）サービスの提供
+販売価格（システム利用料）
+* プラットフォーム手数料： 決済総額の 9%～20%
+* 指導料・月謝・施設利用料： 各商品・契約ごとに個別に記載 ※サービス提供を受ける際に必要となる通信費、電話代は別途ご負担ください。
+お支払方法
+* クレジットカード決済（Stripe）
+* 銀行振込（当社指定のみずほ銀行口座）
+お支払い時期（エスクロー決済方式）
+* クレジットカード決済：
+    1. 利用者がサービスを注文した時点、またはチームが設定した月謝支払日に決済が実行されます。
+    2. お支払いいただいた代金は、指導等のサービス提供が完了するまで、決済システム（Stripe）を通じて当社が一時的に受領（エスクロー）します。
+    3. 当社が代金を受領した時点で、利用者の指導者・チーム等に対する支払債務は消滅します。
+* 銀行振込： 商品注文後に送られるメールに記載の期日までにお支払いください。 ※振込手数料はお客様のご負担となります。 ※代金の支払い期限を過ぎた場合、各サービスの契約は当然に解除されるものとします。
+商品・サービスの提供時期
+* マッチング・管理ツール： 支払い確認後、即時または担当者との調整完了後から利用可能となります。
+* 指導サービス： 指導者とチーム間で調整された日時に実施されます。
+* 部活動支援（上乗せ支援）： チームが掲載した「Amazonほしい物リスト」に基づき、当社規定の条件を満たした段階で、物品提供等の支援を実施いたします。
+返品・解約について
+* 原則として、決済完了後の返金・キャンセルはお受けいたしません。
+* サービスの性質上、エスクロー期間中であっても、各契約に定めるキャンセル規定に従うものとします。
+* 詳細はMyCOACH-MyTEAMの「サービス利用規約」をご確認ください。
+</div>
+                </div>
+                <div id="m-content-terms" class="modal-body hidden">
+                    <h2 class="text-2xl font-black mb-8 border-l-4 border-blue-600 pl-4 italic">利用規約</h2>
+                    <div class="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap">本規約は、MyCOACH-MyTEAM 以下「当社」）が提供する「MyCOACH-MyTEAM」（以下「本サービス」）の利用条件を定めるものです。ユーザーは本規約の全条項に同意した上で本サービスを利用するものとします。
+第1条（目的・適用）
+1. 本規約は、当社と全てのユーザーとの間の本サービスの利用に関わる一切の関係に適用されます。
+2. 当社がサイト上で掲載するルール、ガイドライン、ヘルプ等は、本規約の一部を構成するものとします。
+第2条（定義）
+1. 「コーチ登録者」：本サービスに登録し、指導を提供する個人または法人。
+2. 「チーム登録者」：本サービスに登録し、指導を依頼、または団体運営を行う団体（学校、顧問、代表者等）。
+3. 「保護者/選手」：指導料、月謝、部費等の支払いを行う個人。
+4. 「ユーザー」：コーチ登録者、チーム登録者、および保護者/選手の総称。
+5. 「コーチング契約」：コーチ登録者とチーム登録者の間で直接成立する業務委託契約。
+6. 「支援サービス」：チーム登録者の「Amazonほしい物リスト」に対し、当社が物品提供等の支援を行う独自の仕組み。
+第3条（利用登録とアカウント管理）
+1. 登録希望者が本規約に同意の上、申請し、当社が承認した時点で利用登録が完了します。
+2. 当社は、過去に規約違反がある場合、内容に虚偽がある場合、または第10条（反社会的勢力の排除）に抵触する恐れがある場合、承認を拒絶または取り消すことができ、その理由を開示する義務を負いません。
+3. ユーザーはID・パスワードを自己責任で厳重に管理するものとし、第三者による利用であっても, 当社はログイン情報の一致をもって本人による利用とみなします。これによる損害について当社は一切の責任を負いません。
+第4条（コーチング契約と運営の立ち位置）
+1. 本サービスはマッチングと決済の場を提供するものであり、契約はユーザー間で直接成立します。当社は当該契約の当事者ではなく、指導の品質、内容、事故、怪我、盗難、器物破損等について、当社の故意または重過失を除き、一切の責任を負いません。
+第5条（利用料金・エスクロー決済）
+1. 手数料： 当社は決済総額の9%～20%の範囲内で定める手数料を申し受けます。
+2. 支払完了： 当社（または当社の指定する決済代行業者）が代金を受領した時点で、ユーザーの支払債務は消滅します。
+3. 返金： 原則として決済完了後の返金は行いません。指導の不実施、遅延、内容に関する紛争は当事者間で解決するものとし、当社は受領済みの手数料を返還する義務を負いません。
+第6条（キャンセルおよび紛争）
+1. ユーザー間でキャンセルの合意または紛争が生じた場合、ユーザー自らの責任と費用で解決するものとし、当社は介入義務を負いません。
+第7条（Amazonほしい物リストを活用した支援に関する免責）
+1. 任意性： 本支援は当社の裁量による利益還元（贈与）であり、ユーザーが当社に対し支援を請求する法的権利を有するものではありません。
+2. 団体内規との不整合： チーム登録者は、物品受領が所属団体の内規や公務員倫理規程等に抵触しないことを自らの責任で確認するものとします。
+3. トラブル非関与： 支援に関連して第三者（学校、教育委員会、保護者等）との間で生じた一切のトラブル（贈賄の疑い、不適切寄付の指摘等）について、当社は一切の責任を負いません。
+第8条（直接取引の禁止）
+1. 本サービスを通じて知り合ったユーザー間で、本サービスを介さずに契約締結または決済（現金授受、他決済サービスの利用等）を行うことを固く禁止します。
+2. 違反が発覚した場合、違約金として金50万円、または本来発生すべき手数料の10倍の金額のうち、いずれか高い額を直ちに支払うものとします。本義務は退会後も3年間存続します。
+第9条（体罰・ハラスメントおよび不適切言動の禁止）
+1. 以下の行為を固く禁止します。
+    * 体罰： 殴る、蹴る、突く、平手打ち、過度な反復練習の強制、水分補給や休憩の制限、その他肉体的苦痛を与える一切の行為。
+    * ハラスメント： パワーハラスメント（人格否定、侮辱、無視等）、セクシャルハラスメント（不必要な接触、性的言動、交際要請等）、その他一切の虐待行為。
+    * 誹謗中傷： 本サービス、他のユーザー、または当社についてSNS等で虚偽の情報を発信し、名誉や信用を毀損する行為。
+    * カスタマーハラスメント： 当社スタッフに対し、社会通念上相当な範囲を超える内容や態様で執拗にクレームを行い、業務を妨害する行為。
+2. 違反時の処置： 違反の疑いが生じた場合、当社は事前の通知なくアカウントの永久抹消、売上金の支払保留および没収、教育委員会や警察等への情報提供を行うことができるものとします。
+第10条（反社会的勢力の排除）
+1. 暴力団、暴力団員、暴力団関係企業等ではないことを表明・保証し、将来にわたり反社会的勢力を利用しないことを確約します。違反時は何ら催告なく即時登録を抹消します。
+第11条（秘密保持）
+1. ユーザーは、本サービスに関連して知り得た当社の営業上または技術上の秘密情報を、第三者に開示・漏洩してはならないものとします。
+第12条（本サービスの停止・変更・廃止）
+1. 当社は、システムの保守、サイバー攻撃、通信事故、天災等により、予告なく本サービスを停止できるものとし、それにより生じた損害について一切責任を負いません。
+2. 当社は、当社の判断により本サービスの内容を変更または廃止できるものとします。
+第13条（知的財産権および広報利用）
+1. 本サービスに関する一切の知的財産権は当社に帰属します。
+2. 当社は、ユーザーの活動情報（写真、動画等）を、個人を特定できない形で本サービスのプロモーション（サイトやSNS等）に無償で利用できるものとします。
+第14条（損害賠償の制限）
+1. 当社がユーザーに対し損害賠償責任を負う場合、その上限額は、直接かつ現実に生じた損害に限定され、当該損害発生月に当社が当該ユーザーから実際に受領した手数料額を限度とします。また、逸失利益や特別損害については、予見の有無を問わず一切責任を負いません。
+第15条（規約の変更）
+1. 当社は、必要と判断した場合にはユーザーに周知することにより本規約を変更できます。変更後に本サービスを利用した場合、ユーザーは変更後の規約に同意したものとみなします。
+第16条（準拠法・管轄裁判所）
+1. 本規約の準拠法は日本法とし、東京地方裁判所を第一審の専属的合意管轄裁判所とします。
+
+附則 2026年1月20日 制定
+</div>
+                </div>
+                <div id="m-content-contact" class="modal-body hidden text-center pt-10">
+                    <h2 class="text-4xl font-black mb-6 italic">CONTACT</h2>
+                    <p class="text-gray-400 mb-8 italic">サービスに関するお問い合わせ、取材、提携のご相談は以下まで</p>
+                    <a href="mailto:kanri@mycoach-myteam.com" class="text-blue-500 font-black text-2xl hover:underline italic">kanri@mycoach-myteam.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchMemberTab(tab) {
+            const cContent = document.getElementById('content-coaches');
+            const tContent = document.getElementById('content-teams');
+            const cBtn = document.getElementById('tab-coaches');
+            const tBtn = document.getElementById('tab-teams');
+            
+            if (tab === 'coaches') {
+                cContent.classList.remove('hidden');
+                tContent.classList.add('hidden');
+                cBtn.classList.add('text-white', 'border-blue-500');
+                tBtn.classList.remove('text-white', 'border-blue-500');
+            } else {
+                cContent.classList.add('hidden');
+                tContent.classList.remove('hidden');
+                tBtn.classList.add('text-white', 'border-blue-500');
+                cBtn.classList.remove('text-white', 'border-blue-500');
+            }
+        }
+
+        function openInfoModal(tabId) {
+            document.getElementById('info-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            switchModalTab(tabId);
+        }
+
+        function closeModal() {
+            document.getElementById('info-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function switchModalTab(tabId) {
+            document.querySelectorAll('.modal-body').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.modal-sidebar-btn').forEach(el => el.classList.remove('active'));
+            const content = document.getElementById('m-content-' + tabId);
+            const btn = document.getElementById('m-btn-' + tabId);
+            if(content) content.classList.remove('hidden');
+            if(btn) btn.classList.add('active');
+        }
+    </script>
+</body>
+</html>
