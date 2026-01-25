@@ -60,7 +60,9 @@
         <div class="hero-bg"></div><div class="hero-overlay"></div>
         <div class="hero-content px-6 z-10 w-full">
             <h1 class="cool-title text-5xl md:text-[110px] font-black italic mb-6">MyCOACH<span class="text-blue-500">-</span>MyTEAM</h1>
-            <p class="text-sm md:text-xl mb-20 tracking-[0.2em] font-light text-blue-100/70">部活動・スポーツチーム運営のトータルソリューションサービス</p>
+           <p class="text-sm md:text-xl mb-20 tracking-[0.1em] font-bold text-blue-100/90">
+    <span class="text-white-500">コーチ・試合/練習相手探し</span> ・ <span class="text-white-500">月謝の集金管理</span> ・ <span class="text-white-500">活動支援募集</span> をこれ1つで。
+</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-start">
                 <a href="https://mycoach-myteam.com/" target="_blank" class="btn-modern btn-coach px-8 py-12 rounded-2xl flex flex-col items-center justify-center min-h-[160px]">
                     <span class="text-2xl font-black italic">コーチ登録の方</span>
@@ -80,106 +82,76 @@
         </div>
     </section>
 
-    <section id="service" class="py-32 bg-[#050a15]">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-24">
-                <h2 class="text-7xl font-black italic mb-2 tracking-tighter uppercase">SERVICE</h2>
-                <p class="text-blue-500 font-bold tracking-[0.4em] text-[10px] uppercase">主な機能のご紹介</p>
+<section id="service" class="py-32 bg-[#050a15]">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-24">
+            <h2 class="text-7xl font-black italic mb-2 tracking-tighter uppercase">SERVICE</h2>
+            <p class="text-blue-500 font-bold tracking-[0.4em] text-[10px] uppercase">チーム運営をこれひとつで</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div class="service-card p-10 bg-[#0d1526] hover:border-blue-500/50 transition-all">
+                <div class="mb-6 text-blue-500 text-4xl"><i class="fa-solid fa-user-tie"></i></div>
+                <h3 class="text-2xl font-black italic mb-6 flex items-center">
+                    <span class="w-1.5 h-6 bg-blue-500 mr-3"></span>コーチを探す
+                </h3>
+                <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                    「教える人が足りない」チームと、「教えたい」コーチを繋ぎます。
+                </p>
+                <ul class="space-y-4 text-xs text-gray-500">
+                    <li class="flex items-start"><i class="fa-solid fa-check text-blue-500 mt-1 mr-2"></i>条件に合う指導者をすぐ発見</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-blue-500 mt-1 mr-2"></i>チャットで直接やり取り可能</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-blue-500 mt-1 mr-2"></i>専門スキルを持つ講師を検索</li>
+                </ul>
             </div>
-            <div class="grid lg:grid-cols-3 gap-8">
-                <div class="service-card p-10 bg-[#0d1526]">
-                    <h3 class="text-3xl font-black italic mb-10 flex items-center"><span class="w-1.5 h-8 bg-blue-500 mr-4"></span>コーチ登録の方</h3>
-                    <div class="space-y-8">
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">チームとマッチング</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">最適なチームと繋ぐマッチングプラットフォーム</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">メッセージ機能</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">マッチング後に、メッセージで簡単にコミュニケーションが可能</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">オンライン決済（stripe）機能</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">エスクロー決済でコーチング完了後、即時入金されます</p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="service-card p-10 bg-[#0d1526]">
-                    <h3 class="text-3xl font-black italic mb-10 flex items-center"><span class="w-1.5 h-8 bg-blue-500 mr-4"></span>チーム登録の方</h3>
-                    <div class="space-y-8 text-sm">
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">コーチとマッチング</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">最適なコーチと繋ぐマッチングプラットフォーム</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">チーム同士のマッチング機能</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">練習試合や、合同練習先の募集、連絡をスムーズに実現</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">サポーター支援・募集機能</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">定型文を事務局へ送付するだけで自動でサポーターへの支援募集が開催されます</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">月謝・会費オンライン決済機能</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">stripe決済で自動徴収（クレカ決済・口座振込）</p>
-                        </div>
-                        <div class="bg-[#1a243a] p-3 rounded-lg text-center">
-                            <h4 class="text-[9px] text-blue-500 font-bold italic">（保護者/選手の方が使える機能）</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">食事・トレーニング管理機能</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">AIによる食事の自動分析と筋トレ/体重管理機能</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="service-card p-10 bg-[#0d1526] hover:border-blue-500/50 transition-all">
+                <div class="mb-6 text-blue-500 text-4xl"><i class="fa-solid fa-handshake"></i></div>
+                <h3 class="text-2xl font-black italic mb-6 flex items-center">
+                    <span class="w-1.5 h-6 bg-blue-500 mr-3"></span>練習・試合相手を探す
+                </h3>
+                <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                    地域やレベルの近いチームを見つけ、交流や対戦を促進します。
+                </p>
+                <ul class="space-y-4 text-xs text-gray-500">
+                    <li class="flex items-start"><i class="fa-solid fa-check text-blue-500 mt-1 mr-2"></i>練習試合の対戦校を募集・発見</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-blue-500 mt-1 mr-2"></i>合同練習のパートナー探し</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-blue-500 mt-1 mr-2"></i>カレンダーで空き日程を共有</li>
+                </ul>
+            </div>
 
-                <div class="service-card p-10 bg-[#0d1526]">
-                    <h3 class="text-3xl font-black italic mb-10 flex items-center"><span class="w-1.5 h-8 bg-orange-500 mr-4"></span>サポーター登録の方</h3>
-                    <div class="space-y-8">
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-orange-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">サポーター支援・募集機能</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">定型文を事務局へ送付するだけで自動でサポーターへの支援募集が開催されます</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-1">
-                                <span class="w-3 h-3 bg-orange-500 rounded-full mr-3"></span>
-                                <h4 class="font-bold text-white text-lg">サンクスメッセージ機能</h4>
-                            </div>
-                            <p class="text-xs text-gray-500 ml-6">支援したチームからのお礼メッセージが掲載されます</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="service-card p-10 bg-[#0d1526] hover:border-blue-500/50 transition-all">
+                <div class="mb-6 text-blue-500 text-4xl"><i class="fa-solid fa-credit-card"></i></div>
+                <h3 class="text-2xl font-black italic mb-6 flex items-center">
+                    <span class="w-1.5 h-6 bg-blue-500 mr-3"></span>おカネの管理
+                </h3>
+                <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                    月謝の集金や、銀行振込の確認作業をすべて自動にします。
+                </p>
+                <ul class="space-y-4 text-xs text-gray-500">
+                    <li class="flex items-start"><i class="fa-solid fa-check text-blue-500 mt-1 mr-2"></i>スマホで月謝の支払いが完了</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-blue-500 mt-1 mr-2"></i>「誰が払ったか」が自動で一覧に</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-blue-500 mt-1 mr-2"></i>未納者への催促もシステムにお任せ</li>
+                </ul>
+            </div>
+
+            <div class="service-card p-10 bg-[#0d1526] hover:border-orange-500/50 transition-all border-orange-500/10">
+                <div class="mb-6 text-orange-500 text-4xl"><i class="fa-solid fa-heart-pulse"></i></div>
+                <h3 class="text-2xl font-black italic mb-6 flex items-center">
+                    <span class="w-1.5 h-6 bg-orange-500 mr-3"></span>応援/支援募集
+                </h3>
+                <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                    OBやファン、地域の人から、支援を募集することができます。
+                </p>
+                <ul class="space-y-4 text-xs text-gray-500">
+                    <li class="flex items-start"><i class="fa-solid fa-check text-orange-500 mt-1 mr-2"></i>チーム登録し、支援募集を開始できます</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-orange-500 mt-1 mr-2"></i>楽天ECサイト内に掲載する商品と連携</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-orange-500 mt-1 mr-2"></i>サンクスメッセージで絆が深まる</li>
+                </ul>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="flow" class="py-32 bg-[#050a15]">
         <div class="container mx-auto px-6">
@@ -297,7 +269,7 @@
                                 <div class="flow-step-circle" style="color:#f97316; border-color:#f97316; background:rgba(249,115,22,0.1)">02</div>
                                 <div class="flow-line" style="background: linear-gradient(to bottom, #f97316 0%, transparent 100%)"></div>
                             </div>
-                            <div>
+<div>
                                 <h4 class="font-bold text-white mb-1">サポーター様による選定</h4>
                                 <p class="text-[11px] text-gray-500">支援したい取り組み項目を選定</p>
                             </div>
@@ -440,13 +412,13 @@
 * 開示・訂正： お客様はご自身の情報の開示・訂正を請求できます（開示手数料：2,000円）。
 5. 窓口
 MyCOACH-MyTEAM 個人情報担当者
-* 住所： 〒165-0023 東京都中野区江原町2-13-13 
+* 住所： 〒165-0023 東京都中野区江原町2-13-13
 * メール： kanri@mycoach-myteam.com</div>
                 </div>
                 <div id="m-content-tokusho" class="modal-body hidden">
                     <h2 class="text-2xl font-black mb-8 border-l-4 border-blue-600 pl-4 italic">特定商取引法に基づく表記</h2>
                     <div class="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap">事業者の名称
-MyCOACH-MyTEAM 
+MyCOACH-MyTEAM
 事業者の所在地
 郵便番号：165-0023 住所：東京都中野区江原町2-13-13
 事業者の連絡先
