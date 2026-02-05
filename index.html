@@ -17,11 +17,11 @@
                     },
                     colors: {
                         brand: {
-                            navy: '#0f172a',    // 信頼のダークネイビー
-                            blue: '#0ea5e9',    // アクションブルー
-                            orange: '#f97316',  // アクセントオレンジ
-                            bg: '#f8fafc',      // ベース背景
-                            text: '#334155'     // メインテキスト
+                            navy: '#0f172a',
+                            blue: '#0ea5e9',
+                            orange: '#f97316',
+                            bg: '#f8fafc',
+                            text: '#334155'
                         }
                     },
                     boxShadow: {
@@ -33,7 +33,7 @@
                     },
                     keyframes: {
                         fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
@@ -46,9 +46,9 @@
             background-color: #f8fafc; 
             color: #334155; 
             scroll-behavior: smooth; 
+            -webkit-tap-highlight-color: transparent;
         }
         
-        /* ヒーローセクション */
         .hero-bg {
             position: absolute; inset: 0;
             background-image: url('https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=2070&auto=format&fit=crop'); 
@@ -57,324 +57,243 @@
         }
         .hero-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 50%, rgba(14, 165, 233, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 60%, rgba(14, 165, 233, 0.15) 100%);
         }
 
-        /* 機能カード */
         .feature-card {
             background: white;
             border-radius: 1rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: #0ea5e9;
-            box-shadow: 0 25px 30px -5px rgba(15, 23, 42, 0.1);
+        .feature-card:active { transform: scale(0.98); }
+        @media (min-width: 768px) {
+            .feature-card:hover {
+                transform: translateY(-5px);
+                border-color: #0ea5e9;
+                box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1);
+            }
         }
 
-        /* 画像コンテナ */
         .img-container {
             overflow: hidden;
             border-radius: 1rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
         .img-container img {
             transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .img-container:hover img {
-            transform: scale(1.03);
-        }
+        .img-container:hover img { transform: scale(1.03); }
 
-        /* セクションタイトル装飾 */
         .section-title {
             position: relative;
             display: inline-block;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         .section-title::after {
             content: '';
             position: absolute;
             left: 50%;
-            bottom: -15px;
+            bottom: -10px;
             transform: translateX(-50%);
             width: 40px;
-            height: 4px;
+            height: 3px;
             background: #0ea5e9;
             border-radius: 2px;
         }
 
-        /* アニメーション遅延 */
         .animate-delay-100 { animation-delay: 100ms; }
         .animate-delay-200 { animation-delay: 200ms; }
-        .animate-delay-300 { animation-delay: 300ms; }
 
-        /* モーダル */
-        #info-modal { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); }
+        #info-modal { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(5px); }
         
-        /* スクロールバー */
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
     </style>
 </head>
 <body class="antialiased font-sans text-slate-600">
 
-    <header class="fixed w-full z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200 shadow-sm transition-all duration-300">
-        <div class="container mx-auto px-6 h-16 md:h-20 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-3 group hover:opacity-80 transition-opacity">
-                <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-navy rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-900/20">
+    <header class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center relative">
+            <a href="#" class="flex items-center gap-2 md:gap-3 group">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-navy rounded-lg flex items-center justify-center text-white shadow-md">
                     <i class="fas fa-layer-group text-sm md:text-lg"></i>
                 </div>
                 <div class="flex flex-col justify-center">
-                    <span class="text-lg md:text-xl font-black italic tracking-tighter text-brand-navy leading-none">
+                    <span class="text-base md:text-xl font-black italic tracking-tighter text-brand-navy leading-none">
                         MyCOACH<span class="text-brand-blue mx-0.5">-</span>MyTEAM
                     </span>
                     <span class="text-[9px] md:text-[10px] font-bold text-slate-400 tracking-widest mt-0.5 uppercase">Total Sports Solution</span>
                 </div>
             </a>
             
-            <nav class="hidden lg:flex gap-10 items-center ml-auto">
+            <nav class="hidden lg:flex gap-8 items-center ml-auto">
                 <a href="#service" class="text-xs font-bold tracking-widest text-slate-500 hover:text-brand-navy transition-colors uppercase">Service</a>
                 <a href="#safety" class="text-xs font-bold tracking-widest text-slate-500 hover:text-brand-navy transition-colors uppercase">Safety</a>
                 <a href="#pricing" class="text-xs font-bold tracking-widest text-slate-500 hover:text-brand-navy transition-colors uppercase">Pricing</a>
                 <a href="#contact" onclick="openInfoModal('contact')" class="text-xs font-bold tracking-widest text-slate-500 hover:text-brand-navy transition-colors uppercase">Contact</a>
             </nav>
+
+            <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-slate-600 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 absolute top-full left-0 w-full shadow-lg">
+            <nav class="flex flex-col p-4 text-center">
+                <a href="#service" onclick="toggleMobileMenu()" class="block py-3 text-sm font-bold text-slate-600 border-b border-slate-50">SERVICE</a>
+                <a href="#safety" onclick="toggleMobileMenu()" class="block py-3 text-sm font-bold text-slate-600 border-b border-slate-50">SAFETY</a>
+                <a href="#pricing" onclick="toggleMobileMenu()" class="block py-3 text-sm font-bold text-slate-600 border-b border-slate-50">PRICING</a>
+                <a href="#contact" onclick="openInfoModal('contact'); toggleMobileMenu()" class="block py-3 text-sm font-bold text-brand-blue">CONTACT</a>
+            </nav>
         </div>
     </header>
 
-    <section class="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 md:pb-16 overflow-hidden">
+    <section class="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-10 md:pt-24 md:pb-16 overflow-hidden">
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
         
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            
-            <h1 class="text-4xl md:text-7xl lg:text-8xl font-black leading-tight mb-6 md:mb-8 text-slate-900 tracking-tight drop-shadow-sm opacity-0 animate-fade-in-up">
+        <div class="container mx-auto px-4 md:px-6 relative z-10 text-center">
+            <h1 class="text-3xl md:text-7xl lg:text-8xl font-black leading-tight mb-4 md:mb-8 text-slate-900 tracking-tight drop-shadow-sm opacity-0 animate-fade-in-up">
                 チームの可能性を、<br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-navy to-brand-blue">最大化する。</span>
             </h1>
-
-            <p class="text-slate-500 text-base md:text-xl font-medium mb-10 md:mb-16 opacity-0 animate-fade-in-up animate-delay-100 max-w-2xl mx-auto leading-relaxed">
+            <p class="text-slate-500 text-sm md:text-xl font-medium mb-8 md:mb-16 opacity-0 animate-fade-in-up animate-delay-100 max-w-2xl mx-auto leading-relaxed">
                 指導者マッチング、部費のキャッシュレス決済、そしてチーム支援。<br class="hidden md:inline">
                 部活動・スポーツ運営に必要なすべての機能を、ひとつのIDで。
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto w-full px-2 md:px-4 opacity-0 animate-fade-in-up animate-delay-200">
-                <a href="https://mycoach-myteam.com/" target="_blank" class="feature-card p-6 md:p-8 text-left group cursor-pointer relative overflow-hidden bg-white">
-                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-blue-50 flex items-center justify-center text-brand-blue mb-4 md:mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-whistle text-lg md:text-xl"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 max-w-7xl mx-auto w-full opacity-0 animate-fade-in-up animate-delay-200">
+                <a href="https://mycoach-myteam.com/" target="_blank" class="feature-card flex flex-row md:flex-col items-center md:items-start p-4 md:p-8 gap-4 md:gap-0 bg-white">
+                    <div class="w-12 h-12 md:w-12 md:h-12 rounded-xl bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 md:mb-6">
+                        <i class="fas fa-whistle text-xl"></i>
                     </div>
-                    <h3 class="text-base md:text-lg font-bold text-slate-800 mb-2">コーチ・指導者</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed mb-4 md:mb-6">あなたの専門知識を求めているチームとマッチング。指導実績を資産に。</p>
-                    <span class="text-brand-blue text-xs font-bold flex items-center group-hover:translate-x-1 transition-transform">登録・案件を探す <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    <div class="flex-1 text-left">
+                        <h3 class="text-sm md:text-lg font-bold text-slate-800 mb-1 md:mb-2">コーチ・指導者</h3>
+                        <p class="text-[10px] md:text-xs text-slate-500 leading-tight md:leading-relaxed line-clamp-2 md:line-clamp-none">あなたの専門知識を求めているチームとマッチング。</p>
+                        <span class="hidden md:flex text-brand-blue text-xs font-bold items-center mt-4">登録・案件を探す <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    </div>
+                    <div class="md:hidden text-slate-300"><i class="fas fa-chevron-right"></i></div>
                 </a>
-
-                <a href="https://mycoach-myteam.com/" target="_blank" class="feature-card p-6 md:p-8 text-left group cursor-pointer relative overflow-hidden bg-white">
-                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 flex items-center justify-center text-brand-navy mb-4 md:mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-users text-lg md:text-xl"></i>
+                <a href="https://mycoach-myteam.com/" target="_blank" class="feature-card flex flex-row md:flex-col items-center md:items-start p-4 md:p-8 gap-4 md:gap-0 bg-white">
+                    <div class="w-12 h-12 md:w-12 md:h-12 rounded-xl bg-slate-100 flex items-center justify-center text-brand-navy shrink-0 md:mb-6">
+                        <i class="fas fa-users text-xl"></i>
                     </div>
-                    <h3 class="text-base md:text-lg font-bold text-slate-800 mb-2">チーム運営・顧問</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed mb-4 md:mb-6">指導者採用、集金管理、連絡網。煩雑な事務作業をDXで効率化。</p>
-                    <span class="text-brand-navy text-xs font-bold flex items-center group-hover:translate-x-1 transition-transform">チームを作成 <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    <div class="flex-1 text-left">
+                        <h3 class="text-sm md:text-lg font-bold text-slate-800 mb-1 md:mb-2">チーム運営・顧問</h3>
+                        <p class="text-[10px] md:text-xs text-slate-500 leading-tight md:leading-relaxed line-clamp-2 md:line-clamp-none">指導者採用、集金管理、連絡網をDXで効率化。</p>
+                        <span class="hidden md:flex text-brand-navy text-xs font-bold items-center mt-4">チームを作成 <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    </div>
+                    <div class="md:hidden text-slate-300"><i class="fas fa-chevron-right"></i></div>
                 </a>
-
-                <a href="https://mycoach-myteam.com/" target="_blank" class="feature-card p-6 md:p-8 text-left group cursor-pointer relative overflow-hidden bg-white">
-                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-600 mb-4 md:mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-mobile-screen-button text-lg md:text-xl"></i>
+                <a href="https://mycoach-myteam.com/" target="_blank" class="feature-card flex flex-row md:flex-col items-center md:items-start p-4 md:p-8 gap-4 md:gap-0 bg-white">
+                    <div class="w-12 h-12 md:w-12 md:h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-600 shrink-0 md:mb-6">
+                        <i class="fas fa-mobile-screen-button text-xl"></i>
                     </div>
-                    <h3 class="text-base md:text-lg font-bold text-slate-800 mb-2">保護者・選手</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed mb-4 md:mb-6">月謝のカード払い、スケジュール確認、食事・体調記録をスマホで。</p>
-                    <span class="text-green-600 text-xs font-bold flex items-center group-hover:translate-x-1 transition-transform">ログイン <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    <div class="flex-1 text-left">
+                        <h3 class="text-sm md:text-lg font-bold text-slate-800 mb-1 md:mb-2">保護者・選手</h3>
+                        <p class="text-[10px] md:text-xs text-slate-500 leading-tight md:leading-relaxed line-clamp-2 md:line-clamp-none">月謝のカード払い、スケジュール確認をスマホで。</p>
+                        <span class="hidden md:flex text-green-600 text-xs font-bold items-center mt-4">ログイン <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    </div>
+                    <div class="md:hidden text-slate-300"><i class="fas fa-chevron-right"></i></div>
                 </a>
-
-                <a href="https://ymozfleet-creator.github.io/supporter/" target="_blank" class="feature-card p-6 md:p-8 text-left group cursor-pointer relative overflow-hidden bg-white">
-                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-orange-50 flex items-center justify-center text-brand-orange mb-4 md:mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-gift text-lg md:text-xl"></i>
+                <a href="https://ymozfleet-creator.github.io/supporter/" target="_blank" class="feature-card flex flex-row md:flex-col items-center md:items-start p-4 md:p-8 gap-4 md:gap-0 bg-white">
+                    <div class="w-12 h-12 md:w-12 md:h-12 rounded-xl bg-orange-50 flex items-center justify-center text-brand-orange shrink-0 md:mb-6">
+                        <i class="fas fa-gift text-xl"></i>
                     </div>
-                    <h3 class="text-base md:text-lg font-bold text-slate-800 mb-2">サポーター・寄付</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed mb-4 md:mb-6">OB/OG・地域の皆様から、頑張るチームへ物資の差し入れ支援。</p>
-                    <span class="text-brand-orange text-xs font-bold flex items-center group-hover:translate-x-1 transition-transform">支援する <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    <div class="flex-1 text-left">
+                        <h3 class="text-sm md:text-lg font-bold text-slate-800 mb-1 md:mb-2">サポーター・寄付</h3>
+                        <p class="text-[10px] md:text-xs text-slate-500 leading-tight md:leading-relaxed line-clamp-2 md:line-clamp-none">OB/OG・地域の皆様から、頑張るチームへ支援。</p>
+                        <span class="hidden md:flex text-brand-orange text-xs font-bold items-center mt-4">支援する <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    </div>
+                    <div class="md:hidden text-slate-300"><i class="fas fa-chevron-right"></i></div>
                 </a>
             </div>
         </div>
     </section>
 
     <section id="service" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16 md:mb-20">
-                <span class="text-brand-blue font-bold tracking-widest text-xs uppercase mb-3 block">OUR SOLUTIONS</span>
-                <h2 class="text-3xl md:text-4xl font-black text-slate-800 section-title">現場を変える3つの機能</h2>
-                <p class="text-slate-500 mt-4 text-sm md:text-base">事務作業の負担を減らし、子供たちと向き合う時間を増やします。</p>
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-12 md:mb-20">
+                <span class="text-brand-blue font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 block">OUR SOLUTIONS</span>
+                <h2 class="text-2xl md:text-4xl font-black text-slate-800 section-title">現場を変える3つの機能</h2>
+                <p class="text-slate-500 mt-4 text-xs md:text-base">事務作業の負担を減らし、子供たちと向き合う時間を増やします。</p>
             </div>
-
             <div class="space-y-16 md:space-y-20">
                 <div class="flex flex-col md:flex-row items-center gap-8 md:gap-20">
                     <div class="md:w-1/2 order-2 md:order-1">
-                        <div class="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-blue-50 text-brand-blue rounded-full text-xs font-bold border border-blue-100">
-                            <i class="fas fa-handshake"></i> MATCHING
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4 md:mb-6">最適な指導者と、安全に出会う</h3>
-                        <p class="text-slate-600 leading-loose mb-6 md:mb-8 text-sm md:text-base">
-                            「専門的な指導ができる人がいない」という悩みを解決します。<br class="hidden md:inline">
-                            実績あるコーチを検索し、チャットで直接交渉。契約書の締結から報酬の支払い（エスクロー決済）まで、すべてシステム上で完結するため、金銭トラブルや契約トラブルを防ぎます。
-                        </p>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3 text-sm text-slate-700">
-                                <i class="fas fa-check-circle text-brand-blue mt-1 shrink-0"></i>
-                                <span><strong>本人確認済みコーチ:</strong> 身分証確認を通過した指導者のみ表示されます。</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-sm text-slate-700">
-                                <i class="fas fa-check-circle text-brand-blue mt-1 shrink-0"></i>
-                                <span><strong>電子契約・決済:</strong> 煩雑な書類作成は不要。スマホで契約締結完了。</span>
-                            </li>
+                        <div class="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-blue-50 text-brand-blue rounded-full text-[10px] md:text-xs font-bold border border-blue-100"><i class="fas fa-handshake"></i> MATCHING</div>
+                        <h3 class="text-xl md:text-3xl font-bold text-slate-800 mb-4">最適な指導者と、安全に出会う</h3>
+                        <p class="text-slate-600 leading-relaxed mb-6 text-xs md:text-base">「専門的な指導ができる人がいない」という悩みを解決。実績あるコーチを検索し、チャットで直接交渉。契約から報酬支払いまでシステム上で完結します。</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-blue"></i><span><strong>本人確認済みコーチ:</strong> 身分証確認を徹底。</span></li>
+                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-blue"></i><span><strong>電子契約・決済:</strong> 書類作成は不要。</span></li>
                         </ul>
                     </div>
                     <div class="md:w-1/2 order-1 md:order-2">
-                        <div class="w-full aspect-video img-container relative shadow-2xl shadow-blue-900/10">
-                            <img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&w=2029&auto=format&fit=crop" alt="Coach Teaching" class="absolute inset-0 w-full h-full object-cover">
-                        </div>
+                        <div class="w-full aspect-video img-container relative shadow-xl shadow-blue-900/10"><img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&w=2029&auto=format&fit=crop" alt="Coach Teaching" class="absolute inset-0 w-full h-full object-cover"></div>
                     </div>
                 </div>
-
                 <div class="flex flex-col md:flex-row items-center gap-8 md:gap-20">
+                    <div class="md:w-1/2"><div class="w-full aspect-video img-container relative shadow-xl shadow-indigo-900/10"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Digital Management" class="absolute inset-0 w-full h-full object-cover"></div></div>
                     <div class="md:w-1/2">
-                        <div class="w-full aspect-video img-container relative shadow-2xl shadow-indigo-900/10">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Digital Management" class="absolute inset-0 w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <div class="md:w-1/2">
-                        <div class="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-indigo-50 text-brand-navy rounded-full text-xs font-bold border border-indigo-100">
-                            <i class="fas fa-chart-line"></i> MANAGEMENT DX
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4 md:mb-6">チーム運営をスマホひとつで</h3>
-                        <p class="text-slate-600 leading-loose mb-6 md:mb-8 text-sm md:text-base">
-                            現金での部費徴収や、電話連絡網はもう過去のもの。<br class="hidden md:inline">
-                            保護者はスマホからクレジットカードで月謝を支払い、連絡事項もアプリで受信。さらに、選手の食事写真をAIが解析する「フードコンディショニング」機能で、フィジカル管理も科学的に行えます。
-                        </p>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3 text-sm text-slate-700">
-                                <i class="fas fa-check-circle text-brand-navy mt-1 shrink-0"></i>
-                                <span><strong>集金の自動化:</strong> 未納督促の手間をゼロに。会計報告も透明化。</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-sm text-slate-700">
-                                <i class="fas fa-check-circle text-brand-navy mt-1 shrink-0"></i>
-                                <span><strong>AI食事解析:</strong> 写真を撮るだけで栄養バランスを判定・アドバイス。</span>
-                            </li>
+                        <div class="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-indigo-50 text-brand-navy rounded-full text-[10px] md:text-xs font-bold border border-indigo-100"><i class="fas fa-chart-line"></i> MANAGEMENT DX</div>
+                        <h3 class="text-xl md:text-3xl font-bold text-slate-800 mb-4">チーム運営をスマホひとつで</h3>
+                        <p class="text-slate-600 leading-relaxed mb-6 text-xs md:text-base">現金での部費徴収はもう過去のもの。保護者はスマホからクレジットカードで月謝を支払い、連絡事項もアプリで受信。選手の食事写真もAIが解析します。</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-navy"></i><span><strong>集金の自動化:</strong> 未納督促の手間をゼロに。</span></li>
+                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-navy"></i><span><strong>AI食事解析:</strong> 写真を撮るだけで栄養判定。</span></li>
                         </ul>
                     </div>
                 </div>
-
                 <div class="flex flex-col md:flex-row items-center gap-8 md:gap-20">
                     <div class="md:w-1/2 order-2 md:order-1">
-                        <div class="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-orange-50 text-brand-orange rounded-full text-xs font-bold border border-orange-100">
-                            <i class="fas fa-gift"></i> SUPPORT
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4 md:mb-6">「MySUPPORTER」で支援を集める</h3>
-                        <p class="text-slate-600 leading-loose mb-6 md:mb-8 text-sm md:text-base">
-                            チームに必要な備品（ボール、テーピング等）をAmazonほしい物リストで公開。<br class="hidden md:inline">
-                            OB/OGや地域の方々が、ネットショッピング感覚で簡単に物品を寄贈できる仕組みです。チームの住所は公開されないため、セキュリティも万全です。
-                        </p>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3 text-sm text-slate-700">
-                                <i class="fas fa-check-circle text-brand-orange mt-1 shrink-0"></i>
-                                <span><strong>匿名配送システム:</strong> 学校やチームの住所を知られずに支援受取が可能。</span>
-                            </li>
-                            <li class="flex items-start gap-3 text-sm text-slate-700">
-                                <i class="fas fa-check-circle text-brand-orange mt-1 shrink-0"></i>
-                                <span><strong>お礼機能:</strong> 支援してくれた方へ、活動報告やお礼メッセージを送信。</span>
-                            </li>
+                        <div class="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-orange-50 text-brand-orange rounded-full text-[10px] md:text-xs font-bold border border-orange-100"><i class="fas fa-gift"></i> SUPPORT</div>
+                        <h3 class="text-xl md:text-3xl font-bold text-slate-800 mb-4">「MySUPPORTER」で支援を集める</h3>
+                        <p class="text-slate-600 leading-relaxed mb-6 text-xs md:text-base">必要な備品をAmazonほしい物リストで公開。OB/OGや地域の方々が、ネットショッピング感覚で簡単に物品を寄贈できる仕組みです。</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-orange"></i><span><strong>匿名配送:</strong> 住所を知られずに支援受取が可能。</span></li>
+                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-orange"></i><span><strong>お礼機能:</strong> 支援者へメッセージを送信。</span></li>
                         </ul>
                     </div>
                     <div class="md:w-1/2 order-1 md:order-2">
-                        <div class="w-full aspect-video img-container relative shadow-2xl shadow-orange-900/10">
-                            <img src="https://images.unsplash.com/photo-1614632537190-23e4146777db?q=80&w=2074&auto=format&fit=crop" alt="Support Gifts" class="absolute inset-0 w-full h-full object-cover">
-                        </div>
+                        <div class="w-full aspect-video img-container relative shadow-xl shadow-orange-900/10"><img src="https://images.unsplash.com/photo-1614632537190-23e4146777db?q=80&w=2074&auto=format&fit=crop" alt="Support Gifts" class="absolute inset-0 w-full h-full object-cover"></div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="safety" class="py-16 md:py-20 bg-slate-50 border-y border-slate-200">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12 md:mb-16">
-                <h2 class="text-3xl font-black text-slate-800 mb-4">安心・安全への取り組み</h2>
-                <p class="text-slate-500 text-sm md:text-base">運営会社である株式会社arkは、教育現場での利用を前提とした厳格な管理体制を敷いています。</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-                <div class="bg-white p-8 md:p-10 rounded-2xl shadow-soft text-center border border-slate-100">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 text-xl md:text-2xl">
-                        <i class="fas fa-id-card"></i>
-                    </div>
-                    <h3 class="font-bold text-lg mb-3">本人確認の厳格化</h3>
-                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
-                        全ての指導者に対し、運転免許証等の公的証明書による本人確認を必須としています。不審なユーザーを排除し、安全なマッチング環境を提供します。
-                    </p>
-                </div>
-                <div class="bg-white p-8 md:p-10 rounded-2xl shadow-soft text-center border border-slate-100">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 text-xl md:text-2xl">
-                        <i class="fas fa-shield-halved"></i>
-                    </div>
-                    <h3 class="font-bold text-lg mb-3">エスクロー決済</h3>
-                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
-                        指導料は一時的にシステムがお預かりし、指導完了後にコーチへ支払われます。「お金を払ったのに指導されない」といったトラブルを防ぎます。
-                    </p>
-                </div>
-                <div class="bg-white p-8 md:p-10 rounded-2xl shadow-soft text-center border border-slate-100">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 text-xl md:text-2xl">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3 class="font-bold text-lg mb-3">情報セキュリティ</h3>
-                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
-                        全通信のSSL暗号化はもちろん、クレジットカード情報は国際基準PCI DSS準拠の決済代行会社が管理し、当社サーバーには保存しません。
-                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="pricing" class="py-16 md:py-24 bg-brand-navy text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 30px 30px;"></div>
-
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 max-w-6xl mx-auto">
+        <div class="container mx-auto px-4 md:px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 max-w-6xl mx-auto">
                 <div class="md:w-1/2 text-left">
-                    <span class="text-brand-blue font-bold tracking-widest text-xs uppercase mb-4 block">PRICING PLAN</span>
-                    <h2 class="text-3xl md:text-5xl font-black mb-6 leading-tight">導入コストは<br>一切かかりません。</h2>
-                    <p class="text-slate-300 text-base md:text-lg leading-relaxed mb-8 md:mb-10">
-                        チームの予算が限られていても大丈夫。<br>
-                        登録料・月額固定費は無料です。<br>
-                        実際にマッチングや決済が行われた時だけ、<br>
-                        手数料をいただく「成果報酬型」です。
-                    </p>
+                    <span class="text-brand-blue font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 md:mb-4 block">PRICING PLAN</span>
+                    <h2 class="text-3xl md:text-5xl font-black mb-4 md:mb-6 leading-tight">導入コストは<br>一切かかりません。</h2>
+                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed mb-6 md:mb-10">登録料・月額固定費は無料です。<br>成果が発生した時だけ手数料をいただく「成果報酬型」です。</p>
                 </div>
-
                 <div class="md:w-1/2 w-full">
-                    <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-10 border border-white/20 shadow-2xl">
-                        <div class="flex justify-between items-center border-b border-white/10 pb-8 mb-8">
-                            <div>
-                                <p class="text-sm font-bold text-slate-300 mb-1">登録・月額費</p>
-                                <p class="text-xs text-slate-400">すべての基本機能</p>
-                            </div>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-10 border border-white/20 shadow-2xl">
+                        <div class="flex justify-between items-center border-b border-white/10 pb-6 md:pb-8 mb-6 md:mb-8">
+                            <div><p class="text-xs md:text-sm font-bold text-slate-300 mb-1">登録・月額費</p></div>
                             <span class="text-4xl md:text-5xl font-black italic tracking-tighter">¥0</span>
                         </div>
-                        <div class="space-y-6">
+                        <div class="space-y-4 md:space-y-6">
                             <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="font-bold text-sm md:text-base">システム利用手数料</span>
-                                    <span class="text-xl md:text-2xl font-bold">9 ~ 20<span class="text-sm font-normal ml-1">%</span></span>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-xs md:text-base">システム手数料</span>
+                                    <span class="text-lg md:text-2xl font-bold">9 ~ 20<span class="text-xs md:text-sm font-normal ml-1">%</span></span>
                                 </div>
-                                <p class="text-xs text-slate-400">※マッチング成立、月謝決済時のみ発生</p>
+                                <p class="text-[10px] md:text-xs text-slate-400">※マッチング成立、月謝決済時のみ発生</p>
                             </div>
-                            <div class="pt-6 border-t border-white/10">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="font-bold text-sm md:text-base">支援受け取り手数料</span>
-                                    <span class="text-xl md:text-2xl font-bold text-brand-orange">0<span class="text-sm font-normal ml-1">%</span></span>
+                            <div class="pt-4 md:pt-6 border-t border-white/10">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-xs md:text-base">支援受け取り手数料</span>
+                                    <span class="text-lg md:text-2xl font-bold text-brand-orange">0<span class="text-xs md:text-sm font-normal ml-1">%</span></span>
                                 </div>
-                                <p class="text-xs text-slate-400">※MySUPPORTER機能</p>
+                                <p class="text-[10px] md:text-xs text-slate-400">※MySUPPORTER機能</p>
                             </div>
                         </div>
                     </div>
@@ -383,21 +302,19 @@
         </div>
     </section>
 
-    <footer class="bg-slate-900 text-slate-400 pt-16 pb-8">
+    <footer class="bg-slate-900 text-slate-400 pt-12 pb-8">
         <div class="container mx-auto px-6 text-center">
-            <div class="mb-10 flex flex-col items-center">
-                <span class="text-2xl font-black italic text-white tracking-tighter mb-2">MyCOACH<span class="text-brand-blue mx-0.5">-</span>MyTEAM</span>
+            <div class="mb-8 flex flex-col items-center">
+                <span class="text-xl md:text-2xl font-black italic text-white tracking-tighter mb-2">MyCOACH<span class="text-brand-blue mx-0.5">-</span>MyTEAM</span>
                 <a href="https://ymozfleet-creator.github.io/Ark/" target="_blank" class="text-[10px] uppercase tracking-widest text-slate-600 hover:text-brand-blue transition-colors">Produced by Ark inc.</a>
             </div>
-            
-            <div class="flex flex-wrap justify-center gap-x-6 gap-y-4 mb-12 text-xs font-bold uppercase tracking-wider">
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-8 text-[10px] md:text-xs font-bold uppercase tracking-wider">
                 <button onclick="openInfoModal('privacy')" class="hover:text-white transition-colors">プライバシーポリシー</button>
                 <button onclick="openInfoModal('tokusho')" class="hover:text-white transition-colors">特定商取引法に基づく表記</button>
                 <button onclick="openInfoModal('terms')" class="hover:text-white transition-colors">利用規約</button>
                 <button onclick="openInfoModal('contact')" class="hover:text-white transition-colors">お問い合わせ</button>
             </div>
-
-            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="border-t border-slate-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-[10px]">&copy; 2026 Ark inc. / MyCOACH-MyTEAM All Rights Reserved.</p>
                 <div class="flex gap-4">
                     <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 hover:text-white transition-all"><i class="fa-brands fa-x-twitter"></i></a>
@@ -411,25 +328,29 @@
         <div class="bg-white w-full max-w-5xl h-[90vh] rounded-2xl overflow-hidden flex flex-col md:flex-row relative shadow-2xl">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 z-20 w-8 h-8 flex items-center justify-center bg-slate-100 rounded-full transition-colors">✕</button>
             
-            <div class="w-full md:w-64 bg-slate-50 flex flex-col py-8 shrink-0 border-r border-slate-200 overflow-y-auto">
+            <div class="hidden md:flex w-64 bg-slate-50 flex-col py-8 shrink-0 border-r border-slate-200 overflow-y-auto">
                 <div class="px-6 mb-6 text-xs font-bold text-slate-400 uppercase tracking-widest">Menu</div>
                 <button onclick="switchModalTab('privacy')" id="btn-privacy" class="text-left px-6 py-4 text-xs font-bold text-slate-500 hover:bg-white hover:text-brand-navy transition-all border-l-4 border-transparent">プライバシーポリシー</button>
                 <button onclick="switchModalTab('tokusho')" id="btn-tokusho" class="text-left px-6 py-4 text-xs font-bold text-slate-500 hover:bg-white hover:text-brand-navy transition-all border-l-4 border-transparent">特定商取引法に基づく表記</button>
                 <button onclick="switchModalTab('terms')" id="btn-terms" class="text-left px-6 py-4 text-xs font-bold text-slate-500 hover:bg-white hover:text-brand-navy transition-all border-l-4 border-transparent">利用規約</button>
                 <button onclick="switchModalTab('contact')" id="btn-contact" class="text-left px-6 py-4 text-xs font-bold text-slate-500 hover:bg-white hover:text-brand-navy transition-all border-l-4 border-transparent">お問い合わせ</button>
             </div>
+            <div class="md:hidden absolute top-0 left-0 right-0 bg-slate-50 p-4 border-b z-10 flex gap-2 overflow-x-auto">
+                <button onclick="switchModalTab('privacy')" class="whitespace-nowrap px-3 py-1 text-[10px] font-bold bg-white border rounded-full">プライバシー</button>
+                <button onclick="switchModalTab('tokusho')" class="whitespace-nowrap px-3 py-1 text-[10px] font-bold bg-white border rounded-full">特商法</button>
+                <button onclick="switchModalTab('terms')" class="whitespace-nowrap px-3 py-1 text-[10px] font-bold bg-white border rounded-full">規約</button>
+                <button onclick="switchModalTab('contact')" class="whitespace-nowrap px-3 py-1 text-[10px] font-bold bg-white border rounded-full">連絡先</button>
+            </div>
 
-            <div class="flex-1 overflow-y-auto p-6 md:p-12 bg-white text-slate-700 leading-relaxed text-sm custom-scrollbar">
+            <div class="flex-1 overflow-y-auto p-6 md:p-12 pt-20 md:pt-12 bg-white text-slate-700 leading-relaxed text-sm custom-scrollbar">
                 
                 <div id="content-privacy" class="modal-content">
-                    <h2 class="text-2xl font-bold mb-2 text-slate-900">プライバシーポリシー</h2>
+                    <h2 class="text-xl md:text-2xl font-bold mb-2 text-slate-900">プライバシーポリシー</h2>
                     <p class="text-xs text-slate-400 mb-8">制定日：2026年2月1日 | 改定日：2026年2月5日</p>
-                    
                     <div class="space-y-8">
                         <div>
-                            <p>株式会社ark（以下「当社」）は、提供するサービス「MyCOACH-MyTEAM」（以下「本サービス」）の運営に際し、個人情報の適切な管理と保護に努めます。</p>
+                            <p>株式会社ark（以下「当社」）は、提供するサービス「MyCOACH-MyTEAM」（以下「本サービス」）において、以下の通り個人情報保護方針を定め、個人情報保護の仕組みを構築し、全従業員に個人情報保護の重要性の認識と取組みを徹底させることにより、個人情報の保護を推進致します。</p>
                         </div>
-                        
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">1. 取得する情報</h4>
                             <p>当社は、以下の情報を適正に取得します。</p>
@@ -441,7 +362,6 @@
                             </ul>
                             <p class="mt-2 text-xs text-slate-500">※クレジットカード情報は、PCI DSS準拠の決済代行会社が直接取得・管理し、当社サーバーでは一切保持しません（非保持化）。</p>
                         </div>
-
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">2. 利用目的</h4>
                             <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
@@ -452,7 +372,6 @@
                                 <li>不正行為の監視・防止、および安全対策のため。</li>
                             </ul>
                         </div>
-
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">3. 第三者提供の制限</h4>
                             <p>当社は、以下の場合を除き、ユーザーの同意なく個人情報を第三者に提供しません。</p>
@@ -462,7 +381,6 @@
                                 <li>法令に基づく開示請求があった場合。</li>
                             </ul>
                         </div>
-
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">4. データセキュリティ</h4>
                             <p>SSL/TLS暗号化通信により通信経路を保護するとともに、サーバーへのアクセス権限管理を徹底し、データの漏洩・改ざん防止に努めます。</p>
@@ -471,8 +389,8 @@
                 </div>
 
                 <div id="content-tokusho" class="modal-content hidden">
-                    <h2 class="text-2xl font-bold mb-8 text-slate-900 border-b pb-4">特定商取引法に基づく表記</h2>
-                    <table class="w-full text-sm text-left border-collapse">
+                    <h2 class="text-xl md:text-2xl font-bold mb-8 text-slate-900 border-b pb-4">特定商取引法に基づく表記</h2>
+                    <table class="w-full text-xs md:text-sm text-left border-collapse">
                         <tr class="border-b border-slate-100">
                             <th class="py-4 font-bold text-slate-900 w-1/3 bg-slate-50 px-4">販売事業者名</th>
                             <td class="py-4 px-4"><a href="https://ymozfleet-creator.github.io/Ark/" target="_blank" class="text-brand-blue hover:underline">株式会社ark <i class="fas fa-external-link-alt text-xs ml-1"></i></a></td>
@@ -487,11 +405,11 @@
                         </tr>
                         <tr class="border-b border-slate-100">
                             <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">お問い合わせ</th>
-                            <td class="py-4 px-4">kanri@mycoach-myteam.com<br><span class="text-xs text-slate-500">※お問い合わせは原則メールにて承っております。</span></td>
+                            <td class="py-4 px-4">kanri@mycoach-myteam.com<br><span class="text-[10px] text-slate-500">※お問い合わせは原則メールにて承っております。</span></td>
                         </tr>
                         <tr class="border-b border-slate-100">
                             <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">電話番号</th>
-                            <td class="py-4 px-4">070-8492-2277<br><span class="text-xs text-slate-500">※お電話での技術サポートは行っておりません。</span></td>
+                            <td class="py-4 px-4">070-8492-2277<br><span class="text-[10px] text-slate-500">※お電話での技術サポートは行っておりません。</span></td>
                         </tr>
                         <tr class="border-b border-slate-100">
                             <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">販売価格</th>
@@ -523,12 +441,10 @@
                 </div>
 
                 <div id="content-terms" class="modal-content hidden">
-                    <h2 class="text-2xl font-bold mb-2 text-slate-900">利用規約</h2>
+                    <h2 class="text-xl md:text-2xl font-bold mb-2 text-slate-900">利用規約</h2>
                     <p class="text-xs text-slate-400 mb-8">制定日：2026年2月1日 | 改定日：2026年2月5日</p>
-
                     <div class="space-y-8">
                         <p>この利用規約（以下「本規約」）は、株式会社ark（以下「当社」）が提供する「MyCOACH-MyTEAM」（以下「本サービス」）の利用条件を定めるものです。</p>
-                        
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第1条（適用・登録）</h4>
                             <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
@@ -536,7 +452,6 @@
                                 <li>指導者としての登録には、公的証明書による本人確認が必要です。当社は独自の基準で審査を行い、登録を拒否する権利を有します。</li>
                             </ul>
                         </div>
-
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第2条（禁止事項）</h4>
                             <p>ユーザーは以下の行為を行ってはなりません。</p>
@@ -547,7 +462,6 @@
                                 <li>虚偽の情報を登録・公開する行為。</li>
                             </ul>
                         </div>
-
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第3条（決済・エスクロー）</h4>
                             <p>本サービスでは、安全な取引のため「エスクロー決済」を採用しています。</p>
@@ -556,7 +470,6 @@
                                 <li>指導完了報告が承認された後、システム利用料を差し引いた金額が指導者に支払われます。</li>
                             </ul>
                         </div>
-
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第4条（MySUPPORTER機能）</h4>
                             <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
@@ -564,7 +477,6 @@
                                 <li><strong>匿名配送：</strong>支援者とチーム双方の住所を開示せず配送する仕組みを提供しますが、配送事故等により情報が開示されるリスクを完全に排除するものではありません。</li>
                             </ul>
                         </div>
-
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第5条（免責事項）</h4>
                             <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
@@ -573,7 +485,6 @@
                                 <li>本サービスは、システムメンテナンスや不可抗力により、予告なく停止することがあります。</li>
                             </ul>
                         </div>
-
                         <div>
                             <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第6条（準拠法・裁判管轄）</h4>
                             <p>本規約は日本法を準拠法とし、本サービスに関する紛争は、東京地方裁判所を第一審の専属的合意管轄裁判所とします。</p>
@@ -583,16 +494,16 @@
 
                 <div id="content-contact" class="modal-content hidden h-full flex flex-col items-center justify-center">
                     <div class="bg-blue-50 p-6 rounded-full mb-6 text-brand-blue animate-bounce">
-                        <i class="fas fa-paper-plane text-4xl"></i>
+                        <i class="fas fa-paper-plane text-3xl md:text-4xl"></i>
                     </div>
-                    <h2 class="text-2xl font-bold mb-2 text-slate-900">お問い合わせ</h2>
-                    <p class="text-center text-slate-500 mb-8 max-w-sm text-sm">
-                        導入のご相談、取材のご依頼、<br>その他ご不明点は下記までご連絡ください。
+                    <h2 class="text-xl md:text-2xl font-bold mb-2 text-slate-900">お問い合わせ</h2>
+                    <p class="text-center text-slate-500 mb-8 max-w-sm text-xs md:text-sm">
+                        ご不明点は下記までご連絡ください。
                     </p>
-                    <a href="mailto:kanri@mycoach-myteam.com" class="text-xl font-bold text-brand-navy hover:text-brand-blue transition-colors border-b-2 border-brand-navy pb-1">
+                    <a href="mailto:kanri@mycoach-myteam.com" class="text-lg md:text-xl font-bold text-brand-navy hover:text-brand-blue transition-colors border-b-2 border-brand-navy pb-1">
                         kanri@mycoach-myteam.com
                     </a>
-                    <div class="mt-8 text-xs text-slate-400">
+                    <div class="mt-8 text-xs text-slate-400 text-center">
                         <a href="https://ymozfleet-creator.github.io/Ark/" target="_blank" class="hover:text-brand-blue transition-colors font-bold">株式会社ark</a><br>
                         〒165-0023 東京都中野区江原町2-13-13
                     </div>
@@ -602,6 +513,12 @@
     </div>
 
     <script>
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
         // Modal Logic
         function openInfoModal(tabId) {
             document.getElementById('info-modal').style.display = 'flex';
