@@ -5,600 +5,1149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyCOACH-MyTEAM | 部活動・スポーツチーム運営プラットフォーム</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                        mont: ['"Montserrat"', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            navy: '#0f172a',
-                            blue: '#0ea5e9',
-                            orange: '#f97316',
-                            bg: '#f8fafc',
-                            text: '#334155'
-                        }
-                    },
-                    boxShadow: {
-                        'soft': '0 20px 40px -10px rgba(0, 0, 0, 0.08)',
-                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
-                    },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        body { 
-            background-color: #f8fafc; 
-            color: #334155; 
-            scroll-behavior: smooth; 
+        :root {
+            --navy:  #0f172a;
+            --blue:  #0ea5e9;
+            --orange:#f97316;
+            --green: #16a34a;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
             -webkit-tap-highlight-color: transparent;
-        }
-        
-        .hero-bg {
-            position: absolute; inset: 0;
-            background-image: url('https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover; background-position: center; 
-            z-index: -1;
-        }
-        .hero-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 60%, rgba(14, 165, 233, 0.15) 100%);
+            line-height: 1.7;
         }
 
-        .feature-card {
-            background: white;
-            border-radius: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        /* ---------- HEADER ---------- */
+        .site-header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 68px;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+            display: flex; align-items: center;
         }
-        .feature-card:active { transform: scale(0.98); }
+        .header-inner {
+            width: 100%; max-width: 1200px; margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo-mark {
+            width: 40px; height: 40px;
+            background: var(--navy);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .logo-text { font-family: 'Montserrat', sans-serif; font-weight: 900; font-style: italic; font-size: 1.15rem; color: var(--navy); letter-spacing: -0.03em; line-height: 1.1; }
+        .logo-sub  { font-size: 9px; font-weight: 700; color: #94a3b8; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 2px; }
+        .nav-link  { font-size: 0.72rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; transition: color .2s; text-decoration: none; }
+        .nav-link:hover { color: var(--navy); }
+        .btn-cta   {
+            background: var(--blue); color: #fff;
+            font-size: 0.82rem; font-weight: 700;
+            padding: 0.55rem 1.25rem; border-radius: 9999px;
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: background .2s, transform .2s, box-shadow .2s;
+            box-shadow: 0 4px 12px rgba(14,165,233,.35);
+            text-decoration: none;
+        }
+        .btn-cta:hover { background: #0284c7; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(14,165,233,.45); }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding-top: 68px;
+            overflow: hidden;
+        }
+        .hero-photo {
+            position: absolute; inset: 0;
+            /* スポーツチーム・試合シーン - 明瞭でエネルギッシュな写真 */
+            background-image: url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center 40%;
+        }
+        .hero-mask {
+            position: absolute; inset: 0;
+            background: linear-gradient(115deg, rgba(15,23,42,.88) 0%, rgba(15,23,42,.72) 55%, rgba(14,165,233,.25) 100%);
+        }
+        .hero-body {
+            position: relative; z-index: 2;
+            width: 100%; max-width: 1200px; margin: 0 auto;
+            padding: 3rem 1.5rem;
+            display: flex; flex-direction: column; align-items: flex-start;
+        }
+
+        /* h1 : 2行レイアウト */
+        .hero-h1 {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.4rem, 6vw, 5rem);
+            line-height: 1.18;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin: 1rem 0 1.5rem;
+        }
+        .hero-h1 .line1 { display: block; }
+        .hero-h1 .line2 { display: block; color: var(--blue); }
+
+        .hero-desc {
+            font-size: clamp(0.95rem, 2vw, 1.125rem);
+            color: rgba(255,255,255,.82);
+            max-width: 540px;
+            margin-bottom: 2.25rem;
+            line-height: 1.8;
+        }
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .btn-hero-primary {
+            background: var(--blue); color: #fff;
+            font-weight: 700; font-size: 1rem;
+            padding: 0.875rem 2rem; border-radius: 9999px;
+            display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 6px 20px rgba(14,165,233,.45);
+            transition: all .2s; text-decoration: none;
+        }
+        .btn-hero-primary:hover { background: #0284c7; transform: translateY(-2px); }
+
+        .btn-hero-ghost {
+            border: 2px solid rgba(255,255,255,.55); color: #fff;
+            font-weight: 700; font-size: 1rem;
+            padding: 0.875rem 2rem; border-radius: 9999px;
+            display: inline-flex; align-items: center; gap: 8px;
+            transition: all .2s; text-decoration: none;
+            background: rgba(255,255,255,.08);
+        }
+        .btn-hero-ghost:hover { border-color: #fff; background: rgba(255,255,255,.15); }
+
+        .hero-badges {
+            display: flex; flex-wrap: wrap; gap: .75rem;
+            margin-top: 3rem;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9); font-size: .8rem; font-weight: 700;
+            padding: .35rem .9rem; border-radius: 9999px;
+        }
+        .hero-badge i { color: var(--blue); }
+
+        /* ---------- SECTION COMMON ---------- */
+        .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .tag-label {
+            display: inline-block;
+            font-size: .68rem; font-weight: 800; letter-spacing: .14em;
+            text-transform: uppercase; font-family: 'Montserrat', sans-serif;
+            color: var(--blue); background: #eff6ff;
+            padding: .22rem .85rem; border-radius: 9999px;
+            margin-bottom: .6rem;
+        }
+        .section-h2 {
+            font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+            font-weight: 900; color: #0f172a; line-height: 1.25;
+        }
+        .section-sub { font-size: .95rem; color: #64748b; margin-top: .5rem; }
+
+        /* ---------- FOR-WHO CARDS ---------- */
+        .who-card {
+            background: #fff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+            display: flex; flex-direction: column; gap: 1rem;
+            transition: all .22s ease;
+            text-decoration: none; color: inherit;
+        }
+        .who-card:hover {
+            border-color: var(--blue);
+            box-shadow: 0 12px 32px -6px rgba(14,165,233,.15);
+            transform: translateY(-4px);
+        }
+        .who-icon {
+            width: 56px; height: 56px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; flex-shrink: 0;
+            transition: transform .22s;
+        }
+        .who-card:hover .who-icon { transform: scale(1.1); }
+        .who-role { font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; }
+        .who-title { font-size: 1.05rem; font-weight: 900; color: #0f172a; margin: .2rem 0 .4rem; line-height: 1.3; }
+        .who-desc { font-size: .84rem; color: #64748b; line-height: 1.7; }
+        .who-link { font-size: .82rem; font-weight: 700; display: flex; align-items: center; gap: 5px; margin-top: auto; }
+        .who-link i { transition: transform .2s; }
+        .who-card:hover .who-link i { transform: translateX(4px); }
+
+        /* ---------- SERVICE SECTIONS ---------- */
+        .service-row {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 2.5rem;
+        }
+        @media (min-width: 1024px) {
+            .service-row { flex-direction: row; gap: 4rem; }
+            .service-row.reverse { flex-direction: row-reverse; }
+        }
+        .service-photo-wrap {
+            flex: 1; min-width: 0;
+            border-radius: 1.25rem; overflow: hidden;
+            box-shadow: 0 20px 48px -10px rgba(15,23,42,.18);
+            background: #e2e8f0;
+        }
+        .service-photo-wrap img {
+            width: 100%; aspect-ratio: 16/10;
+            object-fit: cover; display: block;
+            transition: transform .65s ease;
+        }
+        .service-photo-wrap:hover img { transform: scale(1.04); }
+        .service-text { flex: 1; min-width: 0; }
+
+        .service-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            padding: .28rem .85rem; border-radius: 9999px; border: 1px solid;
+            margin-bottom: 1rem;
+        }
+        .service-h3 { font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-weight: 900; color: #0f172a; line-height: 1.3; margin-bottom: .9rem; }
+        .service-desc { font-size: .93rem; color: #475569; line-height: 1.85; margin-bottom: 1.5rem; }
+
+        .feature-list { display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.75rem; }
+        .feature-item {
+            display: flex; align-items: flex-start; gap: .75rem;
+            background: #f8fafc; border: 1px solid #e2e8f0;
+            border-radius: .875rem; padding: .875rem 1rem;
+        }
+        .feature-icon {
+            width: 34px; height: 34px; border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .85rem; flex-shrink: 0; margin-top: 1px;
+        }
+        .feature-name { font-size: .87rem; font-weight: 700; color: #1e293b; }
+        .feature-note { font-size: .76rem; color: #94a3b8; margin-top: 2px; line-height: 1.5; }
+
+        .btn-service {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-weight: 700; font-size: .9rem;
+            padding: .75rem 1.6rem; border-radius: 9999px;
+            transition: all .2s; text-decoration: none;
+        }
+        .btn-service:hover { transform: translateY(-2px); }
+
+        /* ---------- SAFETY ---------- */
+        .safety-card {
+            background: #f8fafc; border: 1.5px solid #e2e8f0;
+            border-radius: 1.25rem; padding: 2rem 1.75rem;
+            text-align: center;
+            transition: all .22s;
+        }
+        .safety-card:hover {
+            border-color: var(--blue); background: #f0f9ff;
+            transform: translateY(-3px);
+        }
+        .safety-icon-wrap {
+            width: 60px; height: 60px; background: #fff;
+            border-radius: 1rem; margin: 0 auto 1.1rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: var(--blue);
+            box-shadow: 0 4px 12px rgba(14,165,233,.12);
+            transition: transform .22s;
+        }
+        .safety-card:hover .safety-icon-wrap { transform: scale(1.1); }
+        .safety-title { font-size: 1rem; font-weight: 900; color: #0f172a; margin-bottom: .5rem; }
+        .safety-desc { font-size: .84rem; color: #475569; line-height: 1.75; }
+
+        /* ---------- PRICING ---------- */
+        .pricing-free-banner {
+            background: var(--navy);
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem;
+            text-align: center; color: #fff;
+            margin-bottom: 1.25rem;
+        }
+        .pricing-table {
+            background: #fff; border-radius: 1.25rem;
+            border: 1.5px solid #e2e8f0; overflow: hidden;
+        }
+        .pricing-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.1rem 1.5rem; gap: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .pricing-row:last-child { border-bottom: none; }
+        .pricing-icon-wrap {
+            width: 40px; height: 40px; border-radius: .75rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .9rem; flex-shrink: 0;
+        }
+        .pricing-name { font-size: .9rem; font-weight: 700; color: #1e293b; }
+        .pricing-note { font-size: .72rem; color: #94a3b8; margin-top: 1px; }
+        .pricing-rate { font-size: 1.4rem; font-weight: 900; font-family: 'Montserrat', sans-serif; color: var(--navy); white-space: nowrap; }
+        .pricing-rate.free { color: var(--green); }
+
+        /* ---------- CTA BAND ---------- */
+        .cta-band {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+            color: #fff; text-align: center;
+            padding: 5rem 1.5rem;
+        }
+        .cta-h2 { font-size: clamp(1.5rem, 3.5vw, 2.3rem); font-weight: 900; margin-bottom: 1rem; }
+        .cta-sub { color: rgba(255,255,255,.72); font-size: .95rem; margin-bottom: 2.25rem; }
+        .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* ---------- FOOTER ---------- */
+        .site-footer { background: #0a0f1c; color: #64748b; padding: 3rem 1.5rem 2rem; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #1e293b; }
+        .footer-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 900; font-style: italic; font-size: 1.2rem; color: #fff; }
+        .footer-tagline { font-size: .72rem; color: #475569; margin-top: 3px; }
+        .footer-sns a {
+            width: 36px; height: 36px;
+            background: #1e293b; border-radius: 9999px;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: #64748b; transition: all .2s; text-decoration: none;
+        }
+        .footer-sns a:hover { background: #334155; color: #fff; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-copy { font-size: .7rem; }
+        .footer-links { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; }
+        .footer-links button { font-size: .72rem; font-weight: 700; color: #64748b; background: none; border: none; cursor: pointer; transition: color .2s; padding: 0; }
+        .footer-links button:hover { color: #fff; }
+
+        /* ---------- MODAL ---------- */
+        #info-modal {
+            display: none; position: fixed; inset: 0; z-index: 200;
+            background: rgba(10,15,28,.85); backdrop-filter: blur(6px);
+            align-items: center; justify-content: center; padding: 1rem;
+        }
+        .modal-inner {
+            background: #fff; width: 100%; max-width: 900px; height: 88vh;
+            border-radius: 1.5rem; overflow: hidden;
+            display: flex; flex-direction: column; position: relative;
+            box-shadow: 0 32px 80px rgba(0,0,0,.35);
+        }
         @media (min-width: 768px) {
-            .feature-card:hover {
-                transform: translateY(-5px);
-                border-color: #0ea5e9;
-                box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1);
+            .modal-inner { flex-direction: row; }
+        }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem; z-index: 10;
+            width: 34px; height: 34px; background: #f1f5f9; border: none;
+            border-radius: 9999px; display: flex; align-items: center; justify-content: center;
+            color: #64748b; cursor: pointer; transition: all .2s;
+        }
+        .modal-close:hover { background: #e2e8f0; color: #1e293b; }
+        .modal-sidebar {
+            display: none; width: 230px; background: #f8fafc;
+            border-right: 1px solid #e2e8f0; flex-direction: column;
+            padding: 2rem 0; flex-shrink: 0;
+        }
+        @media (min-width: 768px) { .modal-sidebar { display: flex; } }
+        .modal-sidebar-label { font-size: .65rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: #94a3b8; padding: 0 1.25rem; margin-bottom: .75rem; }
+        .modal-tab {
+            text-align: left; padding: .875rem 1.25rem;
+            font-size: .8rem; font-weight: 700; color: #64748b;
+            background: none; border: none; border-left: 3px solid transparent;
+            cursor: pointer; transition: all .18s; width: 100%;
+        }
+        .modal-tab:hover { background: #fff; color: #0f172a; }
+        .modal-tab.active { color: #0f172a; background: #fff; border-left-color: var(--blue); }
+        .modal-sp-tabs {
+            display: flex; gap: .5rem; overflow-x: auto; padding: .75rem 1rem;
+            border-bottom: 1px solid #e2e8f0; background: #f8fafc;
+        }
+        @media (min-width: 768px) { .modal-sp-tabs { display: none; } }
+        .modal-sp-tab { white-space: nowrap; font-size: .72rem; font-weight: 700; padding: .4rem .9rem; border: 1px solid #e2e8f0; border-radius: 9999px; background: #fff; cursor: pointer; color: #64748b; }
+        .modal-body {
+            flex: 1; overflow-y: auto; padding: 2rem 1.5rem;
+        }
+        @media (min-width: 768px) { .modal-body { padding: 2.5rem; } }
+        .modal-content { display: none; }
+        .modal-content.active { display: block; }
+        .modal-content.flex-center { display: none; }
+        .modal-content.flex-center.active { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; }
+        .modal-h2 { font-size: 1.35rem; font-weight: 900; color: #0f172a; margin-bottom: .25rem; }
+        .modal-date { font-size: .72rem; color: #94a3b8; margin-bottom: 2rem; }
+        .modal-section-h { font-size: .87rem; font-weight: 700; color: #0f172a; border-bottom: 1px solid #e2e8f0; padding-bottom: .4rem; margin: 1.75rem 0 .75rem; }
+        .modal-p { font-size: .86rem; color: #475569; line-height: 1.8; }
+        .modal-ul { list-style: none; padding: 0; margin: .5rem 0 0; }
+        .modal-ul li { font-size: .86rem; color: #475569; line-height: 1.7; padding: .2rem 0 .2rem 1.1rem; position: relative; }
+        .modal-ul li::before { content: '•'; position: absolute; left: 0; color: var(--blue); }
+        .modal-note { font-size: .75rem; color: #94a3b8; background: #f8fafc; border-radius: .5rem; padding: .6rem .875rem; margin-top: .5rem; }
+        .modal-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: .875rem; padding: 1rem 1.1rem; margin-top: .75rem; }
+        .tokusho-table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+        .tokusho-table th { background: #f8fafc; font-weight: 700; color: #0f172a; padding: .875rem 1rem; text-align: left; vertical-align: top; border-bottom: 1px solid #f1f5f9; white-space: nowrap; }
+        .tokusho-table td { padding: .875rem 1rem; color: #475569; vertical-align: top; border-bottom: 1px solid #f1f5f9; }
+        .tokusho-table tr:last-child th,
+        .tokusho-table tr:last-child td { border-bottom: none; }
+
+        /* scrollbar */
+        .modal-body::-webkit-scrollbar { width: 4px; }
+        .modal-body::-webkit-scrollbar-track { background: transparent; }
+        .modal-body::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+        .a1 { animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .05s both; }
+        .a2 { animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .18s both; }
+        .a3 { animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .3s  both; }
+        .a4 { animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .42s both; }
+        .a5 { animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .54s both; }
+
+        /* ---------- RESPONSIVE HELPERS ---------- */
+        @media (max-width: 767px) {
+
+            /* Hero */
+            .hero-body { align-items: center; text-align: center; padding: 2rem 1.25rem; }
+            .hero-h1 { font-size: 2rem; margin: .75rem 0 1.1rem; }
+            .hero-desc { font-size: .95rem; margin-bottom: 1.75rem; }
+            .hero-actions { justify-content: center; flex-direction: column; width: 100%; }
+            .btn-hero-primary,
+            .btn-hero-ghost { width: 100%; justify-content: center; font-size: .95rem; padding: .875rem 1.5rem; }
+            .hero-badges { justify-content: center; gap: .5rem; }
+            .hero-badge { font-size: .72rem; padding: .3rem .75rem; }
+
+            /* Sections */
+            section { padding: 3.5rem 0 !important; }
+            .section-wrap { padding: 0 1.1rem; }
+            .section-h2 { font-size: 1.5rem; }
+            .section-sub { font-size: .85rem; }
+
+            /* For-who cards: 1列 */
+            .who-card { padding: 1.35rem; }
+            .who-title { font-size: 1rem; }
+            .who-desc { font-size: .82rem; }
+
+            /* Service rows */
+            .service-row { gap: 1.75rem; }
+            .service-h3 { font-size: 1.35rem; }
+            .service-desc { font-size: .88rem; }
+            .feature-name { font-size: .85rem; }
+            .feature-note { font-size: .75rem; }
+            .btn-service { width: 100%; justify-content: center; font-size: .9rem; padding: .875rem 1.5rem; }
+
+            /* Safety cards */
+            .safety-card { padding: 1.5rem 1.25rem; }
+            .safety-title { font-size: .95rem; }
+            .safety-desc { font-size: .82rem; }
+
+            /* Pricing */
+            .pricing-free-banner { padding: 1.75rem 1.25rem; }
+            .pricing-row { padding: .875rem 1rem; gap: .6rem; }
+            .pricing-name { font-size: .82rem; }
+            .pricing-note { font-size: .68rem; }
+            .pricing-rate { font-size: 1.2rem; }
+            .pricing-icon-wrap { width: 34px; height: 34px; flex-shrink: 0; }
+
+            /* CTA band */
+            .cta-band { padding: 3.5rem 1.25rem; }
+            .cta-h2 { font-size: 1.35rem; }
+            .cta-sub { font-size: .875rem; }
+            .cta-btns { flex-direction: column; align-items: stretch; max-width: 320px; margin: 0 auto; }
+            .cta-btns a, .cta-btns button { width: 100%; justify-content: center; }
+
+            /* Footer */
+            .footer-links { gap: .6rem 1rem; }
+            .footer-links button { font-size: .8rem; min-height: 36px; }
+            .footer-copy { font-size: .72rem; }
+
+            /* Modal tokusho table: スマホでは縦積み */
+            .tokusho-table, .tokusho-table tbody,
+            .tokusho-table tr, .tokusho-table th, .tokusho-table td {
+                display: block; width: 100%;
+            }
+            .tokusho-table th {
+                background: #f8fafc; border-bottom: none;
+                padding: .75rem 1rem .25rem;
+                font-size: .78rem; color: #64748b;
+            }
+            .tokusho-table td {
+                padding: .25rem 1rem .875rem;
+                border-bottom: 1px solid #f1f5f9;
+                font-size: .84rem;
             }
         }
 
-        .img-container {
-            overflow: hidden;
-            border-radius: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        /* タップターゲット最小44px確保 */
+        @media (max-width: 767px) {
+            .who-link, .btn-service, .footer-links button { min-height: 44px; }
+            .who-card { -webkit-tap-highlight-color: transparent; }
         }
-        .img-container img {
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .img-container:hover img { transform: scale(1.03); }
-
-        .section-title {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: -10px;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 3px;
-            background: #0ea5e9;
-            border-radius: 2px;
-        }
-
-        .animate-delay-100 { animation-delay: 100ms; }
-        .animate-delay-200 { animation-delay: 200ms; }
-
-        #info-modal { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(5px); }
-        
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
     </style>
 </head>
-<body class="antialiased font-sans text-slate-600">
+<body>
 
-    <header class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
-        <div class="container mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center relative">
-            <a href="#" class="flex items-center gap-2 md:gap-3 group">
-                <div class="w-8 h-8 md:w-10 md:h-10 bg-brand-navy rounded-lg flex items-center justify-center text-white shadow-md">
-                    <i class="fas fa-layer-group text-sm md:text-lg"></i>
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+    <div class="header-inner">
+        <a href="#" style="display:flex;align-items:center;gap:.6rem;text-decoration:none;">
+            <div class="logo-mark"><i class="fas fa-layer-group"></i></div>
+            <div>
+                <div class="logo-text">MyCOACH<span style="color:var(--blue)">-</span>MyTEAM</div>
+                <div class="logo-sub">Total Sports Solution</div>
+            </div>
+        </a>
+
+        <nav style="display:none;align-items:center;gap:2rem;" id="pc-nav">
+            <a href="#for-who"  class="nav-link">ご利用者別</a>
+            <a href="#service"  class="nav-link">機能紹介</a>
+            <a href="#safety"   class="nav-link">安心・安全</a>
+            <a href="#pricing"  class="nav-link">料金</a>
+            <a href="https://mycoach-myteam.com/" target="_blank" class="btn-cta">
+                無料で始める <i class="fas fa-arrow-right" style="font-size:.7rem;"></i>
+            </a>
+        </nav>
+
+        <button onclick="toggleMenu()" id="hamburger"
+            style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;">
+            <i class="fas fa-bars" style="color:#475569;font-size:1.1rem;"></i>
+        </button>
+    </div>
+</header>
+
+<!-- mobile menu -->
+<div id="mobile-menu" style="display:none;position:fixed;top:68px;left:0;right:0;z-index:99;background:#fff;border-bottom:1px solid #e2e8f0;box-shadow:0 8px 24px rgba(0,0,0,.08);">
+    <nav style="display:flex;flex-direction:column;padding:.5rem 0;">
+        <a href="#for-who"  onclick="toggleMenu()" style="padding:1rem 1.5rem;font-size:.9rem;font-weight:700;color:#334155;text-decoration:none;border-bottom:1px solid #f8fafc;">ご利用者別</a>
+        <a href="#service"  onclick="toggleMenu()" style="padding:1rem 1.5rem;font-size:.9rem;font-weight:700;color:#334155;text-decoration:none;border-bottom:1px solid #f8fafc;">機能紹介</a>
+        <a href="#safety"   onclick="toggleMenu()" style="padding:1rem 1.5rem;font-size:.9rem;font-weight:700;color:#334155;text-decoration:none;border-bottom:1px solid #f8fafc;">安心・安全</a>
+        <a href="#pricing"  onclick="toggleMenu()" style="padding:1rem 1.5rem;font-size:.9rem;font-weight:700;color:#334155;text-decoration:none;border-bottom:1px solid #f8fafc;">料金</a>
+        <a href="https://mycoach-myteam.com/" target="_blank" style="padding:1rem 1.5rem;font-size:.9rem;font-weight:700;color:var(--blue);text-decoration:none;">無料で始める →</a>
+    </nav>
+</div>
+
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+    <div class="hero-photo"></div>
+    <div class="hero-mask"></div>
+    <div class="hero-body">
+
+        <div class="a1">
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-family:'Montserrat',sans-serif;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.9);padding:.35rem 1rem;border-radius:9999px;">
+                部活動・スポーツチーム運営プラットフォーム
+            </span>
+        </div>
+
+        <!-- ★ キャッチコピー 2行 -->
+        <h1 class="hero-h1 a2">
+            <span class="line1">チームの可能性を、</span>
+            <span class="line2">最大化する。</span>
+        </h1>
+
+        <p class="hero-desc a3">
+            指導者マッチング・集金管理・チーム支援を<br>
+            ひとつのIDで完結。導入費用は<strong style="color:#fff;">完全無料</strong>。
+        </p>
+
+        <div class="hero-actions a4">
+            <a href="https://mycoach-myteam.com/" target="_blank" class="btn-hero-primary">
+                <i class="fas fa-rocket"></i> 今すぐ無料登録
+            </a>
+            <a href="#service" class="btn-hero-ghost">
+                機能を見る <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+
+        <div class="hero-badges a5">
+            <span class="hero-badge"><i class="fas fa-shield-halved"></i> 本人確認済みコーチ</span>
+            <span class="hero-badge"><i class="fas fa-lock"></i> エスクロー決済で安心</span>
+            <span class="hero-badge"><i class="fas fa-yen-sign"></i> 登録・月額費 無料</span>
+        </div>
+    </div>
+</section>
+
+
+<!-- ===================== FOR WHO ===================== -->
+<section id="for-who" style="background:#fff;padding:5rem 0;">
+    <div class="section-wrap">
+        <div style="text-align:center;margin-bottom:3rem;">
+            <span class="tag-label">FOR WHO</span>
+            <h2 class="section-h2">あなたはどの立場ですか？</h2>
+            <p class="section-sub">それぞれの課題に合わせた機能を用意しています</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;">
+
+            <!-- Coach -->
+            <a href="https://mycoach-myteam.com/" target="_blank" class="who-card">
+                <div class="who-icon" style="background:#eff6ff;color:var(--blue);">
+                    <i class="fas fa-person-running"></i>
                 </div>
-                <div class="flex flex-col justify-center">
-                    <span class="text-base md:text-xl font-black italic tracking-tighter text-brand-navy leading-none">
-                        MyCOACH<span class="text-brand-blue mx-0.5">-</span>MyTEAM
-                    </span>
-                    <span class="text-[9px] md:text-[10px] font-bold text-slate-400 tracking-widest mt-0.5 uppercase">Total Sports Solution</span>
+                <div>
+                    <div class="who-role" style="color:var(--blue);">Coach</div>
+                    <div class="who-title">コーチ・指導者の方</div>
+                    <div class="who-desc">専門知識を活かして指導案件を受注。登録無料、成功報酬型で気軽に始められます。</div>
+                </div>
+                <div class="who-link" style="color:var(--blue);">
+                    登録・案件を探す <i class="fas fa-arrow-right" style="font-size:.7rem;"></i>
                 </div>
             </a>
-            
-            <nav class="hidden lg:flex gap-8 items-center ml-auto">
-                <a href="#service" class="text-xs font-bold tracking-widest text-slate-500 hover:text-brand-navy transition-colors uppercase">Service</a>
-                <a href="#safety" class="text-xs font-bold tracking-widest text-slate-500 hover:text-brand-navy transition-colors uppercase">Safety</a>
-                <a href="#pricing" class="text-xs font-bold tracking-widest text-slate-500 hover:text-brand-navy transition-colors uppercase">Pricing</a>
-                <a href="#contact" onclick="openInfoModal('contact')" class="text-xs font-bold tracking-widest text-slate-500 hover:text-brand-navy transition-colors uppercase">Contact</a>
-            </nav>
 
-            <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-slate-600 focus:outline-none bg-slate-50 rounded-md border border-slate-200">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
+            <!-- Manager -->
+            <a href="https://mycoach-myteam.com/" target="_blank" class="who-card">
+                <div class="who-icon" style="background:#f1f5f9;color:var(--navy);">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div>
+                    <div class="who-role" style="color:var(--navy);">Manager</div>
+                    <div class="who-title">チーム運営・顧問の方</div>
+                    <div class="who-desc">指導者採用・集金管理・連絡網をDX化。現金集金や電話連絡から解放されます。</div>
+                </div>
+                <div class="who-link" style="color:var(--navy);">
+                    チームを作成 <i class="fas fa-arrow-right" style="font-size:.7rem;"></i>
+                </div>
+            </a>
+
+            <!-- Parent / Player -->
+            <a href="https://mycoach-myteam.com/" target="_blank" class="who-card">
+                <div class="who-icon" style="background:#f0fdf4;color:var(--green);">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div>
+                    <div class="who-role" style="color:var(--green);">Parent / Player</div>
+                    <div class="who-title">保護者・選手の方</div>
+                    <div class="who-desc">月謝のカード払い・スケジュール確認・連絡受信をスマホひとつで管理できます。</div>
+                </div>
+                <div class="who-link" style="color:var(--green);">
+                    ログイン・登録 <i class="fas fa-arrow-right" style="font-size:.7rem;"></i>
+                </div>
+            </a>
+
+            <!-- Supporter -->
+            <a href="https://mysupporter-91816.web.app/" target="_blank" class="who-card">
+                <div class="who-icon" style="background:#fff7ed;color:var(--orange);">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <div>
+                    <div class="who-role" style="color:var(--orange);">Supporter</div>
+                    <div class="who-title">OB/OG・サポーターの方</div>
+                    <div class="who-desc">地域や卒業生から、頑張るチームへ物品支援。住所非公開の匿名配送に対応。</div>
+                </div>
+                <div class="who-link" style="color:var(--orange);">
+                    支援する <i class="fas fa-arrow-right" style="font-size:.7rem;"></i>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ===================== SERVICE ===================== -->
+<section id="service" style="background:#f8fafc;padding:5rem 0;">
+    <div class="section-wrap">
+        <div style="text-align:center;margin-bottom:3.5rem;">
+            <span class="tag-label">OUR SOLUTIONS</span>
+            <h2 class="section-h2">現場を変える3つの機能</h2>
+            <p class="section-sub">事務作業の負担を減らし、選手・スタッフと向き合える時間に</p>
         </div>
 
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 absolute top-full left-0 w-full shadow-lg z-40 transition-all duration-300 ease-in-out">
-            <nav class="flex flex-col p-4 text-center">
-                <a href="#service" onclick="toggleMobileMenu()" class="block py-4 text-sm font-bold text-slate-600 border-b border-slate-50 hover:bg-slate-50">SERVICE</a>
-                <a href="#safety" onclick="toggleMobileMenu()" class="block py-4 text-sm font-bold text-slate-600 border-b border-slate-50 hover:bg-slate-50">SAFETY</a>
-                <a href="#pricing" onclick="toggleMobileMenu()" class="block py-4 text-sm font-bold text-slate-600 border-b border-slate-50 hover:bg-slate-50">PRICING</a>
-                <a href="#contact" onclick="openInfoModal('contact'); toggleMobileMenu()" class="block py-4 text-sm font-bold text-brand-blue hover:bg-blue-50">CONTACT</a>
-            </nav>
-        </div>
-    </header>
-
-    <section class="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-10 md:pt-24 md:pb-16 overflow-hidden">
-        <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
-        
-        <div class="container mx-auto px-4 md:px-6 relative z-10 text-center">
-            <h1 class="text-3xl md:text-7xl lg:text-8xl font-black leading-tight mb-4 md:mb-8 text-slate-900 tracking-tight drop-shadow-sm opacity-0 animate-fade-in-up">
-                チームの可能性を、<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-navy to-brand-blue">最大化する。</span>
-            </h1>
-            <p class="text-slate-500 text-sm md:text-xl font-medium mb-8 md:mb-16 opacity-0 animate-fade-in-up animate-delay-100 max-w-2xl mx-auto leading-relaxed">
-                指導者マッチング、部費のキャッシュレス決済、そしてチーム支援。<br class="hidden md:inline">
-                部活動・スポーツ運営に必要なすべての機能を、ひとつのIDで。
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 max-w-7xl mx-auto w-full opacity-0 animate-fade-in-up animate-delay-200">
-                <a href="https://mycoach-myteam.com/" target="_blank" class="feature-card flex flex-row md:flex-col items-center md:items-start p-4 md:p-8 gap-4 md:gap-0 bg-white group hover:border-brand-blue">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-blue-50 flex items-center justify-center text-brand-blue shrink-0 md:mb-6">
-                        <i class="fas fa-stopwatch text-xl md:text-2xl"></i>
+        <!-- ── MyCOACH ── -->
+        <div class="service-row" style="margin-bottom:5rem;">
+            <div class="service-photo-wrap">
+                <!-- コーチがフィールドで選手に直接指導している場面 -->
+                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=2070&auto=format&fit=crop" alt="コーチによる直接指導" loading="eager" style="width:100%;aspect-ratio:16/10;object-fit:cover;display:block;">
+            </div>
+            <div class="service-text">
+                <span class="service-tag" style="color:var(--blue);background:#eff6ff;border-color:#bfdbfe;">
+                    <i class="fas fa-handshake"></i> MyCOACH
+                </span>
+                <h3 class="service-h3">最適な指導者と、<br>安全に出会う</h3>
+                <p class="service-desc">「専門的な指導ができる人がいない」という悩みを解決。実績あるコーチを検索してチャットで直接交渉。契約から報酬支払いまでシステム上で完結します。</p>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon" style="background:#eff6ff;color:var(--blue);"><i class="fas fa-id-card"></i></div>
+                        <div>
+                            <div class="feature-name">本人確認実施済みコーチ</div>
+                            <div class="feature-note">当社所定の基準に基づき身分証確認を実施。安心してマッチングできます。</div>
+                        </div>
                     </div>
-                    <div class="flex-1 text-left">
-                        <h3 class="text-sm md:text-lg font-bold text-slate-800 mb-1 md:mb-2 group-hover:text-brand-blue transition-colors">コーチ・指導者の方</h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 leading-tight md:leading-relaxed line-clamp-2 md:line-clamp-none">あなたの専門知識を求めているチームとマッチング。</p>
-                        <span class="hidden md:flex text-brand-blue text-xs font-bold items-center mt-4">登録・案件を探す <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    <div class="feature-item">
+                        <div class="feature-icon" style="background:#eff6ff;color:var(--blue);"><i class="fas fa-file-contract"></i></div>
+                        <div>
+                            <div class="feature-name">電子契約・エスクロー決済</div>
+                            <div class="feature-note">書類作成不要。指導完了後に自動支払いのため「払い逃げ」リスクゼロ。</div>
+                        </div>
                     </div>
-                    <div class="md:hidden text-slate-300"><i class="fas fa-chevron-right"></i></div>
+                    <div class="feature-item">
+                        <div class="feature-icon" style="background:#eff6ff;color:var(--blue);"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <div>
+                            <div class="feature-name">源泉徴収税の代理納付</div>
+                            <div class="feature-note">指導料に係る源泉徴収税は事務局が代わりに計算・納付。チームの経理負担を大幅に軽減します。</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://mycoach-myteam.com/" target="_blank" class="btn-service" style="background:var(--blue);color:#fff;box-shadow:0 4px 14px rgba(14,165,233,.35);">
+                    コーチを探す <i class="fas fa-arrow-right" style="font-size:.75rem;"></i>
                 </a>
-                
-                <a href="https://mycoach-myteam.com/" target="_blank" class="feature-card flex flex-row md:flex-col items-center md:items-start p-4 md:p-8 gap-4 md:gap-0 bg-white group hover:border-brand-navy">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-slate-100 flex items-center justify-center text-brand-navy shrink-0 md:mb-6">
-                        <i class="fas fa-users text-xl md:text-2xl"></i>
+            </div>
+        </div>
+
+        <!-- ── MyTEAM ── -->
+        <div class="service-row reverse" style="margin-bottom:5rem;">
+            <div class="service-photo-wrap">
+                <!-- チームが集まってミーティング・戦術確認しているシーン -->
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=2070&auto=format&fit=crop" alt="スマートフォンでのチーム管理" loading="eager" style="width:100%;aspect-ratio:16/10;object-fit:cover;display:block;">
+            </div>
+            <div class="service-text">
+                <span class="service-tag" style="color:var(--navy);background:#f1f5f9;border-color:#cbd5e1;">
+                    <i class="fas fa-chart-line"></i> MyTEAM
+                </span>
+                <h3 class="service-h3">チーム運営を<br>スマホひとつで</h3>
+                <p class="service-desc">現金での部費徴収はもう過去のもの。集金・連絡・コンディション管理をひとつのアプリで完結。保護者もスマホからすべてが確認できます。</p>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon" style="background:#f1f5f9;color:var(--navy);"><i class="fas fa-credit-card"></i></div>
+                        <div>
+                            <div class="feature-name">集金の完全自動化</div>
+                            <div class="feature-note">毎月の月謝を自動決済。未納督促の手間をゼロにします。</div>
+                        </div>
                     </div>
-                    <div class="flex-1 text-left">
-                        <h3 class="text-sm md:text-lg font-bold text-slate-800 mb-1 md:mb-2 group-hover:text-brand-navy transition-colors">チーム運営・顧問の方</h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 leading-tight md:leading-relaxed line-clamp-2 md:line-clamp-none">指導者採用、集金管理、連絡網をDXで効率化。</p>
-                        <span class="hidden md:flex text-brand-navy text-xs font-bold items-center mt-4">チームを作成 <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    <div class="feature-item">
+                        <div class="feature-icon" style="background:#f1f5f9;color:var(--navy);"><i class="fas fa-dumbbell"></i></div>
+                        <div>
+                            <div class="feature-name">トレーニング管理</div>
+                            <div class="feature-note">練習メニューの記録・共有、出席管理で選手の成長を可視化します。</div>
+                        </div>
                     </div>
-                    <div class="md:hidden text-slate-300"><i class="fas fa-chevron-right"></i></div>
+                    <div class="feature-item">
+                        <div class="feature-icon" style="background:#f1f5f9;color:var(--navy);"><i class="fas fa-utensils"></i></div>
+                        <div>
+                            <div class="feature-name">AI食事解析（フードコンディショニング）</div>
+                            <div class="feature-note">写真を撮るだけで栄養状態を確認。<span style="color:#94a3b8;">※参考情報であり医学的診断に代わるものではありません。</span></div>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://mycoach-myteam.com/" target="_blank" class="btn-service" style="background:var(--navy);color:#fff;box-shadow:0 4px 14px rgba(15,23,42,.25);">
+                    チームを作成する <i class="fas fa-arrow-right" style="font-size:.75rem;"></i>
                 </a>
-                
-                <a href="https://mycoach-myteam.com/" target="_blank" class="feature-card flex flex-row md:flex-col items-center md:items-start p-4 md:p-8 gap-4 md:gap-0 bg-white group hover:border-green-500">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-green-50 flex items-center justify-center text-green-600 shrink-0 md:mb-6">
-                        <i class="fas fa-mobile-screen-button text-xl md:text-2xl"></i>
+            </div>
+        </div>
+
+        <!-- ── MySUPPORTER ── -->
+        <div class="service-row">
+            <div class="service-photo-wrap">
+                <!-- チームへの応援・サポートのシーン。観客・応援団イメージ -->
+                <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=2070&auto=format&fit=crop" alt="チームへの支援・応援" loading="eager" style="width:100%;aspect-ratio:16/10;object-fit:cover;display:block;">
+            </div>
+            <div class="service-text">
+                <span class="service-tag" style="color:var(--orange);background:#fff7ed;border-color:#fed7aa;">
+                    <i class="fas fa-gift"></i> MySUPPORTER
+                </span>
+                <h3 class="service-h3">OB・地域から<br>チームへ支援を届ける</h3>
+                <p class="service-desc">必要な備品をAmazonほしい物リストで公開。OB/OGや地域の方々が、ネットショッピング感覚で簡単に物品を寄贈できる仕組みです。</p>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon" style="background:#fff7ed;color:var(--orange);"><i class="fas fa-user-secret"></i></div>
+                        <div>
+                            <div class="feature-name">匿名配送対応</div>
+                            <div class="feature-note">住所を知られずに支援の受け取りが可能。プライバシーを守ります。</div>
+                        </div>
                     </div>
-                    <div class="flex-1 text-left">
-                        <h3 class="text-sm md:text-lg font-bold text-slate-800 mb-1 md:mb-2 group-hover:text-green-600 transition-colors">保護者・選手の方</h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 leading-tight md:leading-relaxed line-clamp-2 md:line-clamp-none">月謝のカード払い、スケジュール確認をスマホで。</p>
-                        <span class="hidden md:flex text-green-600 text-xs font-bold items-center mt-4">ログイン <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
+                    <div class="feature-item">
+                        <div class="feature-icon" style="background:#fff7ed;color:var(--orange);"><i class="fas fa-envelope-open-text"></i></div>
+                        <div>
+                            <div class="feature-name">お礼メッセージ機能</div>
+                            <div class="feature-note">支援してくれた方へ感謝のメッセージを送信できます。</div>
+                        </div>
                     </div>
-                    <div class="md:hidden text-slate-300"><i class="fas fa-chevron-right"></i></div>
+                </div>
+                <a href="https://mysupporter-91816.web.app/" target="_blank" class="btn-service" style="background:var(--orange);color:#fff;box-shadow:0 4px 14px rgba(249,115,22,.35);">
+                    支援ページを見る <i class="fas fa-arrow-right" style="font-size:.75rem;"></i>
                 </a>
-                
-                <a href="https://mysupporter-91816.web.app/" target="_blank" class="feature-card flex flex-row md:flex-col items-center md:items-start p-4 md:p-8 gap-4 md:gap-0 bg-white group hover:border-brand-orange">
-                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-orange-50 flex items-center justify-center text-brand-orange shrink-0 md:mb-6">
-                        <i class="fas fa-gift text-xl md:text-2xl"></i>
-                    </div>
-                    <div class="flex-1 text-left">
-                        <h3 class="text-sm md:text-lg font-bold text-slate-800 mb-1 md:mb-2 group-hover:text-brand-orange transition-colors">サポーターの方</h3>
-                        <p class="text-[10px] md:text-xs text-slate-500 leading-tight md:leading-relaxed line-clamp-2 md:line-clamp-none">OB/OG・地域の皆様から、頑張るチームへ支援。</p>
-                        <span class="hidden md:flex text-brand-orange text-xs font-bold items-center mt-4">支援する <i class="fas fa-arrow-right ml-2 text-[10px]"></i></span>
-                    </div>
-                    <div class="md:hidden text-slate-300"><i class="fas fa-chevron-right"></i></div>
-                </a>
             </div>
         </div>
-    </section>
 
-    <section id="service" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-4 md:px-6">
-            <div class="text-center mb-12 md:mb-20">
-                <span class="text-brand-blue font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 block">OUR SOLUTIONS</span>
-                <h2 class="text-2xl md:text-4xl font-black text-slate-800 section-title">現場を変える3つの機能</h2>
-                <p class="text-slate-500 mt-4 text-xs md:text-base">事務作業の負担を減らし、選手/スタッフと向き合える時間に。</p>
-            </div>
-            <div class="space-y-16 md:space-y-20">
-                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-20">
-                    <div class="md:w-1/2 order-2 md:order-1">
-                        <div class="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-blue-50 text-brand-blue rounded-full text-[10px] md:text-xs font-bold border border-blue-100"><i class="fas fa-handshake"></i> MyCOACH</div>
-                        <h3 class="text-xl md:text-3xl font-bold text-slate-800 mb-4">最適な指導者と、安全に出会う</h3>
-                        <p class="text-slate-600 leading-relaxed mb-6 text-xs md:text-base">「専門的な指導ができる人がいない」という悩みを解決。実績あるコーチを検索し、チャットで直接交渉。契約から報酬支払いまでシステム上で完結します。</p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-blue"></i><span><strong>本人確認済みコーチ:</strong> 身分証確認を徹底。</span></li>
-                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-blue"></i><span><strong>電子契約・決済:</strong> 書類作成は不要。</span></li>
-                        </ul>
-                    </div>
-                    <div class="md:w-1/2 order-1 md:order-2 px-6 md:px-0">
-                        <div class="w-full aspect-video img-container relative shadow-xl shadow-blue-900/10"><img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&w=2029&auto=format&fit=crop" alt="Coach Teaching" class="absolute inset-0 w-full h-full object-cover"></div>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-20">
-                    <div class="md:w-1/2 px-6 md:px-0">
-                        <div class="w-full aspect-video img-container relative shadow-xl shadow-indigo-900/10">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Smartphone App Management" class="absolute inset-0 w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <div class="md:w-1/2">
-                        <div class="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-indigo-50 text-brand-navy rounded-full text-[10px] md:text-xs font-bold border border-indigo-100"><i class="fas fa-chart-line"></i> MyTEAM</div>
-                        <h3 class="text-xl md:text-3xl font-bold text-slate-800 mb-4">チーム運営をスマホひとつで</h3>
-                        <p class="text-slate-600 leading-relaxed mb-6 text-xs md:text-base">現金での部費徴収はもう過去のもの。保護者はスマホからクレジットカードで月謝を支払い、連絡事項もアプリで受信。選手の食事写真もAIが解析します。</p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-navy"></i><span><strong>集金の自動化:</strong> 未納督促の手間をゼロに。</span></li>
-                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-navy"></i><span><strong>AI食事解析:</strong> 写真を撮るだけで栄養判定。</span></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-20">
-                    <div class="md:w-1/2 order-2 md:order-1">
-                        <div class="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-orange-50 text-brand-orange rounded-full text-[10px] md:text-xs font-bold border border-orange-100"><i class="fas fa-gift"></i> MySUPPORTER</div>
-                        <h3 class="text-xl md:text-3xl font-bold text-slate-800 mb-4">「MySUPPORTER」で支援を集める</h3>
-                        <p class="text-slate-600 leading-relaxed mb-6 text-xs md:text-base">必要な備品をAmazonほしい物リストで公開。OB/OGや地域の方々が、ネットショッピング感覚で簡単に物品を寄贈できる仕組みです。</p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-orange"></i><span><strong>匿名配送:</strong> 住所を知られずに支援受取が可能。</span></li>
-                            <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700"><i class="fas fa-check-circle text-brand-orange"></i><span><strong>お礼機能:</strong> 支援者へメッセージを送信。</span></li>
-                        </ul>
-                    </div>
-                    <div class="md:w-1/2 order-1 md:order-2 px-6 md:px-0">
-                        <div class="w-full aspect-video img-container relative shadow-xl shadow-orange-900/10"><img src="https://images.unsplash.com/photo-1614632537190-23e4146777db?q=80&w=2074&auto=format&fit=crop" alt="Support Gifts" class="absolute inset-0 w-full h-full object-cover"></div>
-                    </div>
-                </div>
-            </div>
+    </div>
+</section>
+
+
+<!-- ===================== SAFETY ===================== -->
+<section id="safety" style="background:#fff;padding:5rem 0;">
+    <div class="section-wrap">
+        <div style="text-align:center;margin-bottom:3rem;">
+            <span class="tag-label">SAFETY & SECURITY</span>
+            <h2 class="section-h2">安心・安全への取り組み</h2>
+            <p class="section-sub">教育現場での利用を前提とした、厳格な管理体制</p>
         </div>
-    </section>
-
-    <section id="safety" class="py-12 md:py-20 bg-slate-50 border-y border-slate-200">
-        <div class="container mx-auto px-4 md:px-6">
-            <div class="text-center mb-10 md:mb-16">
-                <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2 md:mb-4">安心・安全への取り組み</h2>
-                <p class="text-slate-500 text-xs md:text-base">教育現場での利用を前提とした厳格な管理体制。</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;max-width:860px;margin:0 auto;">
+            <div class="safety-card">
+                <div class="safety-icon-wrap"><i class="fas fa-id-card"></i></div>
+                <div class="safety-title">本人確認の実施</div>
+                <div class="safety-desc">全ての指導者に対し、運転免許証等の公的証明書による本人確認を当社所定の基準に基づき実施しています。</div>
             </div>
-
-            <div class="grid md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
-                <div class="bg-white p-6 md:p-10 rounded-2xl shadow-sm text-center border border-slate-100">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 text-xl md:text-2xl">
-                        <i class="fas fa-id-card"></i>
-                    </div>
-                    <h3 class="font-bold text-base md:text-lg mb-2">本人確認の厳格化</h3>
-                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">全ての指導者に対し、運転免許証等の公的証明書による本人確認を必須としています。</p>
-                </div>
-                <div class="bg-white p-6 md:p-10 rounded-2xl shadow-sm text-center border border-slate-100">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 text-xl md:text-2xl">
-                        <i class="fas fa-shield-halved"></i>
-                    </div>
-                    <h3 class="font-bold text-base md:text-lg mb-2">エスクロー決済</h3>
-                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">指導完了後に支払われるため、「払ったのに指導されない」といったトラブルを防ぎます。</p>
-                </div>
-                <div class="bg-white p-6 md:p-10 rounded-2xl shadow-sm text-center border border-slate-100">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 text-xl md:text-2xl">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3 class="font-bold text-base md:text-lg mb-2">情報セキュリティ</h3>
-                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">カード情報はPCI DSS準拠の決済代行会社が管理し、当社サーバーには保存しません。</p>
-                </div>
+            <div class="safety-card">
+                <div class="safety-icon-wrap"><i class="fas fa-shield-halved"></i></div>
+                <div class="safety-title">エスクロー決済</div>
+                <div class="safety-desc">指導完了後に支払われるため、「払ったのに指導されない」といったトラブルを防ぎます。</div>
             </div>
-        </div>
-    </section>
-
-    <section id="pricing" class="py-16 md:py-24 bg-brand-navy text-white relative overflow-hidden">
-        <div class="container mx-auto px-4 md:px-6 relative z-10">
-            <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 max-w-6xl mx-auto">
-                <div class="md:w-1/2 text-left">
-                    <span class="text-brand-blue font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 md:mb-4 block">PRICING PLAN</span>
-                    <h2 class="text-3xl md:text-5xl font-black mb-4 md:mb-6 leading-tight">導入コストは<br>一切かかりません。</h2>
-                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed mb-6 md:mb-10">登録料・月額固定費は無料です。<br>成果が発生した時だけ手数料をいただく「成果報酬型」です。</p>
-                </div>
-                <div class="md:w-1/2 w-full">
-                    <div class="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-10 border border-white/20 shadow-2xl">
-                        <div class="flex justify-between items-center border-b border-white/10 pb-6 md:pb-8 mb-6 md:mb-8">
-                            <div><p class="text-xs md:text-sm font-bold text-slate-300 mb-1">全サービスの登録料・月額費</p></div>
-                            <span class="text-4xl md:text-5xl font-black italic tracking-tighter">¥0</span>
-                        </div>
-                        <div class="space-y-4 md:space-y-6">
-                            <div>
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="font-bold text-xs md:text-base">システム手数料</span>
-                                    <span class="text-lg md:text-2xl font-bold">5%~</span>
-                                </div>
-                                <p class="text-[10px] md:text-xs text-slate-400">※マッチング成立、月謝決済時のみ発生 利用サービスによって手数料が異なります。</p>
-                            </div>
-                            <div class="pt-4 md:pt-6 border-t border-white/10">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="font-bold text-xs md:text-base">支援登録・受け取り手数料</span>
-                                    <span class="text-4xl md:text-5xl font-black italic tracking-tighter">¥0</span>
-                                </div>
-                                <p class="text-[10px] md:text-xs text-slate-400">※サポーターの購入に関しては送料、手数料が発生します。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-slate-900 text-slate-400 pt-12 pb-8">
-        <div class="container mx-auto px-6 text-center">
-            <div class="mb-8 flex flex-col items-center">
-                <span class="text-xl md:text-2xl font-black italic text-white tracking-tighter mb-2">MyCOACH<span class="text-brand-blue mx-0.5">-</span>MyTEAM</span>
-                <a href="https://ymozfleet-creator.github.io/Ark/" target="_blank" class="text-[10px] uppercase tracking-widest text-slate-600 hover:text-brand-blue transition-colors">Produced by Ark inc.</a>
-            </div>
-            <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-8 text-[10px] md:text-xs font-bold uppercase tracking-wider">
-                <button onclick="openInfoModal('privacy')" class="hover:text-white transition-colors">プライバシーポリシー</button>
-                <button onclick="openInfoModal('tokusho')" class="hover:text-white transition-colors">特定商取引法に基づく表記</button>
-                <button onclick="openInfoModal('terms')" class="hover:text-white transition-colors">利用規約</button>
-                <button onclick="openInfoModal('contact')" class="hover:text-white transition-colors">お問い合わせ</button>
-            </div>
-            <div class="border-t border-slate-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-[10px]">&copy; 2026 Ark inc. / MyCOACH-MyTEAM All Rights Reserved.</p>
-                <div class="flex gap-4">
-                    <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 hover:text-white transition-all"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <div id="info-modal" class="hidden items-center justify-center p-4">
-        <div class="bg-white w-full max-w-5xl h-[90vh] rounded-2xl overflow-hidden flex flex-col md:flex-row relative shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 z-20 w-8 h-8 flex items-center justify-center bg-slate-100 rounded-full transition-colors">✕</button>
-            
-            <div class="hidden md:flex w-64 bg-slate-50 flex-col py-8 shrink-0 border-r border-slate-200 overflow-y-auto">
-                <div class="px-6 mb-6 text-xs font-bold text-slate-400 uppercase tracking-widest">Menu</div>
-                <button onclick="switchModalTab('privacy')" id="btn-privacy" class="text-left px-6 py-4 text-xs font-bold text-slate-500 hover:bg-white hover:text-brand-navy transition-all border-l-4 border-transparent">プライバシーポリシー</button>
-                <button onclick="switchModalTab('tokusho')" id="btn-tokusho" class="text-left px-6 py-4 text-xs font-bold text-slate-500 hover:bg-white hover:text-brand-navy transition-all border-l-4 border-transparent">特定商取引法に基づく表記</button>
-                <button onclick="switchModalTab('terms')" id="btn-terms" class="text-left px-6 py-4 text-xs font-bold text-slate-500 hover:bg-white hover:text-brand-navy transition-all border-l-4 border-transparent">利用規約</button>
-                <button onclick="switchModalTab('contact')" id="btn-contact" class="text-left px-6 py-4 text-xs font-bold text-slate-500 hover:bg-white hover:text-brand-navy transition-all border-l-4 border-transparent">お問い合わせ</button>
-            </div>
-            <div class="md:hidden absolute top-0 left-0 right-0 bg-slate-50 p-4 border-b z-10 flex gap-2 overflow-x-auto">
-                <button onclick="switchModalTab('privacy')" class="whitespace-nowrap px-3 py-1 text-[10px] font-bold bg-white border rounded-full">プライバシー</button>
-                <button onclick="switchModalTab('tokusho')" class="whitespace-nowrap px-3 py-1 text-[10px] font-bold bg-white border rounded-full">特商法</button>
-                <button onclick="switchModalTab('terms')" class="whitespace-nowrap px-3 py-1 text-[10px] font-bold bg-white border rounded-full">規約</button>
-                <button onclick="switchModalTab('contact')" class="whitespace-nowrap px-3 py-1 text-[10px] font-bold bg-white border rounded-full">連絡先</button>
-            </div>
-
-            <div class="flex-1 overflow-y-auto p-6 md:p-12 pt-20 md:pt-12 bg-white text-slate-700 leading-relaxed text-sm custom-scrollbar">
-                
-                <div id="content-privacy" class="modal-content">
-                    <h2 class="text-xl md:text-2xl font-bold mb-2 text-slate-900">プライバシーポリシー</h2>
-                    <p class="text-xs text-slate-400 mb-8">制定日：2026年2月1日 | 改定日：2026年2月5日</p>
-                    <div class="space-y-8">
-                        <div>
-                            <p>株式会社ark（以下「当社」）は、提供するサービス「MyCOACH-MyTEAM」（以下「本サービス」）において、以下の通り個人情報保護方針を定め、個人情報保護の仕組みを構築し、全従業員に個人情報保護の重要性の認識と取組みを徹底させることにより、個人情報の保護を推進致します。</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">1. 取得する情報</h4>
-                            <p>当社は、以下の情報を適正に取得します。</p>
-                            <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
-                                <li><strong>基本情報：</strong>氏名、住所、電話番号、メールアドレス、生年月日。</li>
-                                <li><strong>本人確認情報：</strong>運転免許証、パスポート、資格証明書等の画像データ。</li>
-                                <li><strong>ヘルスケア情報：</strong>「フードコンディショニング」機能を通じてアップロードされた食事画像、身体データ（身長、体重等）。</li>
-                                <li><strong>取引情報：</strong>マッチング履歴、メッセージ内容、決済履歴。</li>
-                            </ul>
-                            <p class="mt-2 text-xs text-slate-500">※クレジットカード情報は、PCI DSS準拠の決済代行会社が直接取得・管理し、当社サーバーでは一切保持しません（非保持化）。</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">2. 利用目的</h4>
-                            <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
-                                <li>本サービスの提供、ユーザー認証、利用料金の請求のため。</li>
-                                <li>ユーザー間のマッチングおよび契約締結の支援のため。</li>
-                                <li>AIを用いた食事解析および健康アドバイスの提供のため。</li>
-                                <li>「MySUPPORTER」機能における支援物資の配送手配（匿名配送を含む）のため。</li>
-                                <li>不正行為の監視・防止、および安全対策のため。</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">3. 第三者提供の制限</h4>
-                            <p>当社は、以下の場合を除き、ユーザーの同意なく個人情報を第三者に提供しません。</p>
-                            <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
-                                <li>マッチング成立後、当事者間（チームと指導者）で必要な連絡先情報を開示する場合。</li>
-                                <li>物品配送のため、配送業者に配送先情報を提供する場合。</li>
-                                <li>法令に基づく開示請求があった場合。</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">4. データセキュリティ</h4>
-                            <p>SSL/TLS暗号化通信により通信経路を保護するとともに、サーバーへのアクセス権限管理を徹底し、データの漏洩・改ざん防止に努めます。</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="content-tokusho" class="modal-content hidden">
-                    <h2 class="text-xl md:text-2xl font-bold mb-8 text-slate-900 border-b pb-4">特定商取引法に基づく表記</h2>
-                    <table class="w-full text-xs md:text-sm text-left border-collapse">
-                        <tr class="border-b border-slate-100">
-                            <th class="py-4 font-bold text-slate-900 w-1/3 bg-slate-50 px-4">販売事業者名</th>
-                            <td class="py-4 px-4"><a href="https://ymozfleet-creator.github.io/Ark/" target="_blank" class="text-brand-blue hover:underline">株式会社ark <i class="fas fa-external-link-alt text-xs ml-1"></i></a></td>
-                        </tr>
-                        <tr class="border-b border-slate-100">
-                            <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">運営統括責任者</th>
-                            <td class="py-4 px-4">茂住 雄太</td>
-                        </tr>
-                        <tr class="border-b border-slate-100">
-                            <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">所在地</th>
-                            <td class="py-4 px-4">〒165-0023 東京都中野区江原町2-13-13</td>
-                        </tr>
-                        <tr class="border-b border-slate-100">
-                            <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">お問い合わせ</th>
-                            <td class="py-4 px-4">kanri@mycoach-myteam.com<br><span class="text-[10px] text-slate-500">※お問い合わせは原則メールにて承っております。</span></td>
-                        </tr>
-                        <tr class="border-b border-slate-100">
-                            <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">電話番号</th>
-                            <td class="py-4 px-4">070-8492-2277<br><span class="text-[10px] text-slate-500">※お電話での技術サポートは行っておりません。</span></td>
-                        </tr>
-                        <tr class="border-b border-slate-100">
-                            <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">販売価格</th>
-                            <td class="py-4 px-4">
-                                <strong>指導料・支援金：</strong>各ページに表示された金額。<br>
-                                <strong>システム利用料：</strong>取引金額の2.4%〜20%（税込）。
-                            </td>
-                        </tr>
-                        <tr class="border-b border-slate-100">
-                            <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">支払方法・時期</th>
-                            <td class="py-4 px-4">
-                                <strong>クレジットカード決済</strong><br>
-                                ・都度決済（マッチング等）：契約成立時に決済。<br>
-                                ・継続決済（月謝）：初回決済日を基準に毎月自動決済。
-                            </td>
-                        </tr>
-                        <tr class="border-b border-slate-100">
-                            <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">役務の提供時期</th>
-                            <td class="py-4 px-4">決済完了後、直ちに（または合意した指導日時に）サービスを提供します。</td>
-                        </tr>
-                        <tr class="border-b border-slate-100">
-                            <th class="py-4 font-bold text-slate-900 bg-slate-50 px-4">返品・キャンセル</th>
-                            <td class="py-4 px-4">
-                                デジタルコンテンツおよび役務提供の性質上、決済完了後の利用者都合による返金・キャンセルはお受けできません。<br>
-                                ただし、指導者の欠席等によりサービスが提供されなかった場合は、当社規定に基づき返金等の対応を行います。
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div id="content-terms" class="modal-content hidden">
-                    <h2 class="text-xl md:text-2xl font-bold mb-2 text-slate-900">利用規約</h2>
-                    <p class="text-xs text-slate-400 mb-8">制定日：2026年2月1日 | 改定日：2026年2月5日</p>
-                    <div class="space-y-8">
-                        <p>この利用規約（以下「本規約」）は、株式会社ark（以下「当社」）が提供する「MyCOACH-MyTEAM」（以下「本サービス」）の利用条件を定めるものです。</p>
-                        
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第1条（適用・登録）</h4>
-                            <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
-                                <li>ユーザーは、本規約に同意の上、当社所定の手続きを経て利用登録を行うものとします。</li>
-                                <li>指導者としての登録には、公的証明書による本人確認が必要です。当社は独自の基準で審査を行い、登録を拒否する権利を有します。</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第2条（禁止事項）</h4>
-                            <p>ユーザーは以下の行為を行ってはなりません。</p>
-                            <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
-                                <li>法令、公序良俗に反する行為。</li>
-                                <li><strong>中抜き行為：</strong>本サービスで知り得た相手と、本サービスを介さずに直接金銭の授受や契約を行う行為。発覚した場合、違約金を請求します。</li>
-                                <li>他のユーザーに対するハラスメント、誹謗中傷、差別的言動。</li>
-                                <li>虚偽の情報を登録・公開する行為。</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第3条（決済・エスクロー）</h4>
-                            <p>本サービスでは、安全な取引のため「エスクロー決済」を採用しています。</p>
-                            <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
-                                <li>チームが支払った指導料は、指導完了まで当社が一時的に管理します。</li>
-                                <li>指導完了報告が承認された後、システム利用料を差し引いた金額が指導者に支払われます。</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第4条（MySUPPORTER機能）</h4>
-                            <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
-                                <li>本機能は、物品の寄付・支援を仲介するものです。</li>
-                                <li><strong>匿名配送：</strong>支援者とチーム双方の住所を開示せず配送する仕組みを提供しますが、配送事故等により情報が開示されるリスクを完全に排除するものではありません。</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第5条（免責事項）</h4>
-                            <ul class="list-disc list-inside mt-2 pl-2 space-y-1">
-                                <li><strong>AI解析：</strong>「フードコンディショニング」によるアドバイスは参考情報であり、医学的な診断や指導に代わるものではありません。</li>
-                                <li>当社は、ユーザー間のトラブル（指導内容の不一致、事故等）について、当社の故意・重過失がない限り責任を負いません。</li>
-                                <li>本サービスは、システムメンテナンスや不可抗力により、予告なく停止することがあります。</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 class="font-bold text-slate-900 mb-2 border-b border-slate-200 pb-1">第6条（準拠法・裁判管轄）</h4>
-                            <p>本規約は日本法を準拠法とし、本サービスに関する紛争は、東京地方裁判所を第一審の専属的合意管轄裁判所とします。</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="content-contact" class="modal-content hidden h-full flex flex-col items-center justify-center">
-                    <div class="bg-blue-50 p-6 rounded-full mb-6 text-brand-blue animate-bounce">
-                        <i class="fas fa-paper-plane text-3xl md:text-4xl"></i>
-                    </div>
-                    <h2 class="text-xl md:text-2xl font-bold mb-2 text-slate-900">お問い合わせ</h2>
-                    <p class="text-center text-slate-500 mb-8 max-w-sm text-xs md:text-sm">
-                        導入のご相談、取材のご依頼、<br>その他ご不明点は下記までご連絡ください。
-                    </p>
-                    <a href="mailto:kanri@mycoach-myteam.com" class="text-lg md:text-xl font-bold text-brand-navy hover:text-brand-blue transition-colors border-b-2 border-brand-navy pb-1">
-                        kanri@mycoach-myteam.com
-                    </a>
-                    <div class="mt-8 text-xs text-slate-400 text-center">
-                        <a href="https://ymozfleet-creator.github.io/Ark/" target="_blank" class="hover:text-brand-blue transition-colors font-bold">株式会社ark</a><br>
-                        〒165-0023 東京都中野区江原町2-13-13
-                    </div>
-                </div>
+            <div class="safety-card">
+                <div class="safety-icon-wrap"><i class="fas fa-lock"></i></div>
+                <div class="safety-title">情報セキュリティ</div>
+                <div class="safety-desc">カード情報はPCI DSS準拠の決済代行会社が管理し、当社サーバーには保存しません。</div>
             </div>
         </div>
     </div>
+</section>
 
-    <script>
-        // Toggle Mobile Menu
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
 
-        // Modal Logic
-        function openInfoModal(tabId) {
-            document.getElementById('info-modal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            switchModalTab(tabId);
-        }
+<!-- ===================== PRICING ===================== -->
+<section id="pricing" style="background:#f8fafc;padding:5rem 0;">
+    <div class="section-wrap">
+        <div style="text-align:center;margin-bottom:3rem;">
+            <span class="tag-label">PRICING</span>
+            <h2 class="section-h2">シンプルな料金体系</h2>
+            <p class="section-sub">初期費用・月額費用は一切かかりません</p>
+        </div>
+        <div style="max-width:640px;margin:0 auto;">
+            <div class="pricing-free-banner">
+                <div style="font-size:.7rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;font-family:'Montserrat',sans-serif;color:var(--blue);margin-bottom:.5rem;">Free Forever</div>
+                <div style="font-size:3.5rem;font-weight:900;font-family:'Montserrat',sans-serif;line-height:1;">¥0</div>
+                <div style="color:rgba(255,255,255,.65);font-size:.9rem;margin-top:.5rem;">登録料・月額固定費・サービス導入費、すべて無料</div>
+            </div>
 
-        function closeModal() {
-            document.getElementById('info-modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+            <div class="pricing-table">
+                <div style="padding:.875rem 1.5rem;background:#f8fafc;border-bottom:1px solid #f1f5f9;">
+                    <span style="font-size:.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">成果が発生した時だけ手数料が発生します</span>
+                </div>
+                <div class="pricing-row">
+                    <div style="display:flex;align-items:center;gap:.75rem;">
+                        <div class="pricing-icon-wrap" style="background:#eff6ff;color:var(--blue);"><i class="fas fa-handshake"></i></div>
+                        <div>
+                            <div class="pricing-name">コーチマッチング（MyCOACH）</div>
+                            <div class="pricing-note">マッチング成立時のみ発生</div>
+                        </div>
+                    </div>
+                    <div class="pricing-rate">10%</div>
+                </div>
+                <div class="pricing-row">
+                    <div style="display:flex;align-items:center;gap:.75rem;">
+                        <div class="pricing-icon-wrap" style="background:#f1f5f9;color:var(--navy);"><i class="fas fa-credit-card"></i></div>
+                        <div>
+                            <div class="pricing-name">月謝決済（MyTEAM）</div>
+                            <div class="pricing-note">月謝の決済時のみ発生</div>
+                        </div>
+                    </div>
+                    <div class="pricing-rate">5%</div>
+                </div>
+                <div class="pricing-row">
+                    <div style="display:flex;align-items:center;gap:.75rem;">
+                        <div class="pricing-icon-wrap" style="background:#fff7ed;color:var(--orange);"><i class="fas fa-gift"></i></div>
+                        <div>
+                            <div class="pricing-name">支援登録・受け取り（MySUPPORTER）</div>
+                            <div class="pricing-note">※サポーター購入時の送料・手数料は別途発生</div>
+                        </div>
+                    </div>
+                    <div class="pricing-rate free">¥0</div>
+                </div>
+            </div>
+            <p style="text-align:center;font-size:.75rem;color:#94a3b8;margin-top:1rem;">
+                ※その他オプション機能は取引金額の2.4%〜20%（税込）。各サービス詳細ページにてご確認ください。
+            </p>
+            <div style="text-align:center;margin-top:2rem;">
+                <a href="https://mycoach-myteam.com/" target="_blank" class="btn-hero-primary" style="font-size:.95rem;">
+                    <i class="fas fa-rocket"></i> 無料で始める
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
-        function switchModalTab(tabId) {
-            document.querySelectorAll('.modal-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('[id^="btn-"]').forEach(el => {
-                el.classList.remove('text-brand-navy', 'border-brand-blue', 'bg-white');
-                el.classList.add('text-slate-500', 'border-transparent');
-            });
-            const content = document.getElementById('content-' + tabId);
-            const btn = document.getElementById('btn-' + tabId);
-            if(content) {
-                content.classList.remove('hidden');
-                if(tabId === 'contact') content.classList.add('flex');
-            }
-            if(btn) {
-                btn.classList.remove('text-slate-500', 'border-transparent');
-                btn.classList.add('text-brand-navy', 'border-brand-blue', 'bg-white');
-            }
+
+<!-- ===================== CTA BAND ===================== -->
+<section class="cta-band">
+    <h2 class="cta-h2">まずは無料で登録してみませんか？</h2>
+    <p class="cta-sub">初期費用・月額費用は不要。スポーツ現場に関わるすべての方へ。</p>
+    <div class="cta-btns">
+        <a href="https://mycoach-myteam.com/" target="_blank" class="btn-hero-primary" style="font-size:.95rem;">
+            <i class="fas fa-rocket"></i> MyCOACH-MyTEAM を始める
+        </a>
+        <button onclick="openModal('contact')" class="btn-hero-ghost" style="font-size:.95rem;border:2px solid rgba(255,255,255,.55);cursor:pointer;">
+            <i class="fas fa-envelope"></i> お問い合わせ
+        </button>
+    </div>
+</section>
+
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-top">
+            <div>
+                <div class="footer-logo-text">MyCOACH<span style="color:var(--blue)">-</span>MyTEAM</div>
+                <div class="footer-tagline">部活動・スポーツチーム運営プラットフォーム</div>
+                <a href="https://ymozfleet-creator.github.io/Ark/" target="_blank"
+                   style="font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#334155;text-decoration:none;display:block;margin-top:.35rem;transition:color .2s;"
+                   onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='#334155'">
+                    Produced by Ark inc.
+                </a>
+            </div>
+            <div class="footer-sns" style="display:flex;gap:.5rem;">
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">&copy; 2026 Ark inc. / MyCOACH-MyTEAM All Rights Reserved.</div>
+            <div class="footer-links">
+                <button onclick="openModal('privacy')">プライバシーポリシー</button>
+                <button onclick="openModal('tokusho')">特定商取引法に基づく表記</button>
+                <button onclick="openModal('terms')">利用規約</button>
+                <button onclick="openModal('contact')">お問い合わせ</button>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ===================== MODAL ===================== -->
+<div id="info-modal" onclick="if(event.target===this)closeModal()">
+    <div class="modal-inner">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+        <!-- PC sidebar -->
+        <div class="modal-sidebar">
+            <div class="modal-sidebar-label">Menu</div>
+            <button class="modal-tab" id="tab-privacy"  onclick="switchTab('privacy')">プライバシーポリシー</button>
+            <button class="modal-tab" id="tab-tokusho"  onclick="switchTab('tokusho')">特定商取引法に基づく表記</button>
+            <button class="modal-tab" id="tab-terms"    onclick="switchTab('terms')">利用規約</button>
+            <button class="modal-tab" id="tab-contact"  onclick="switchTab('contact')">お問い合わせ</button>
+        </div>
+
+        <!-- SP tabs -->
+        <div class="modal-sp-tabs">
+            <button class="modal-sp-tab" onclick="switchTab('privacy')">プライバシー</button>
+            <button class="modal-sp-tab" onclick="switchTab('tokusho')">特商法</button>
+            <button class="modal-sp-tab" onclick="switchTab('terms')">利用規約</button>
+            <button class="modal-sp-tab" onclick="switchTab('contact')">連絡先</button>
+        </div>
+
+        <!-- Content -->
+        <div class="modal-body">
+
+            <!-- Privacy -->
+            <div id="content-privacy" class="modal-content">
+                <h2 class="modal-h2">プライバシーポリシー</h2>
+                <p class="modal-date">制定日：2026年2月1日 ｜ 改定日：2026年2月5日</p>
+                <p class="modal-p">株式会社ark（以下「当社」）は、提供するサービス「MyCOACH-MyTEAM」（以下「本サービス」）において、以下の通り個人情報保護方針を定め、個人情報保護の仕組みを構築し、全従業員に個人情報保護の重要性の認識と取組みを徹底させることにより、個人情報の保護を推進致します。</p>
+
+                <h4 class="modal-section-h">1. 取得する情報</h4>
+                <p class="modal-p">当社は、以下の情報を適正に取得します。</p>
+                <ul class="modal-ul">
+                    <li><strong>基本情報：</strong>氏名、住所、電話番号、メールアドレス、生年月日。</li>
+                    <li><strong>本人確認情報：</strong>運転免許証、パスポート、資格証明書等の画像データ。</li>
+                    <li><strong>ヘルスケア情報：</strong>「フードコンディショニング」機能を通じてアップロードされた食事画像、身体データ（身長、体重等）。</li>
+                    <li><strong>取引情報：</strong>マッチング履歴、メッセージ内容、決済履歴。</li>
+                </ul>
+                <div class="modal-note">※クレジットカード情報は、PCI DSS準拠の決済代行会社が直接取得・管理し、当社サーバーでは一切保持しません（非保持化）。</div>
+
+                <h4 class="modal-section-h">2. 利用目的</h4>
+                <ul class="modal-ul">
+                    <li>本サービスの提供、ユーザー認証、利用料金の請求のため。</li>
+                    <li>ユーザー間のマッチングおよび契約締結の支援のため。</li>
+                    <li>AIを用いた食事解析および健康アドバイスの提供のため。</li>
+                    <li>「MySUPPORTER」機能における支援物資の配送手配（匿名配送を含む）のため。</li>
+                    <li>不正行為の監視・防止、および安全対策のため。</li>
+                </ul>
+
+                <h4 class="modal-section-h">3. 第三者提供の制限</h4>
+                <p class="modal-p">当社は、以下の場合を除き、ユーザーの同意なく個人情報を第三者に提供しません。</p>
+                <ul class="modal-ul">
+                    <li>マッチング成立後、当事者間（チームと指導者）で必要な連絡先情報を開示する場合。</li>
+                    <li>物品配送のため、配送業者に配送先情報を提供する場合。</li>
+                    <li>法令に基づく開示請求があった場合。</li>
+                </ul>
+
+                <h4 class="modal-section-h">4. データセキュリティ</h4>
+                <p class="modal-p">SSL/TLS暗号化通信により通信経路を保護するとともに、サーバーへのアクセス権限管理を徹底し、データの漏洩・改ざん防止に努めます。</p>
+
+                <h4 class="modal-section-h">5. 個人情報に関するお問い合わせ・開示請求</h4>
+                <p class="modal-p">個人情報の開示・訂正・削除・利用停止等のご請求、その他個人情報の取り扱いに関するお問い合わせは、下記窓口までメールにてご連絡ください。ご本人確認の上、合理的な期間（原則30日以内）を目安に対応いたします。</p>
+                <div class="modal-box">
+                    <p style="font-size:.87rem;font-weight:700;color:#0f172a;">個人情報保護窓口：株式会社ark</p>
+                    <p style="font-size:.78rem;color:#64748b;margin-top:4px;">〒165-0023 東京都中野区江原町2-13-13</p>
+                    <p style="font-size:.78rem;color:#64748b;margin-top:2px;">メール：kanri@mycoach-myteam.com</p>
+                </div>
+            </div>
+
+            <!-- Tokusho -->
+            <div id="content-tokusho" class="modal-content">
+                <h2 class="modal-h2">特定商取引法に基づく表記</h2>
+                <p class="modal-date" style="margin-bottom:1.5rem;"></p>
+                <table class="tokusho-table">
+                    <tr>
+                        <th>販売事業者名</th>
+                        <td><a href="https://ymozfleet-creator.github.io/Ark/" target="_blank" style="color:var(--blue);">株式会社ark <i class="fas fa-external-link-alt" style="font-size:.7rem;"></i></a></td>
+                    </tr>
+                    <tr>
+                        <th>運営統括責任者</th>
+                        <td>茂住 雄太</td>
+                    </tr>
+                    <tr>
+                        <th>所在地</th>
+                        <td>〒165-0023 東京都中野区江原町2-13-13</td>
+                    </tr>
+                    <tr>
+                        <th>お問い合わせ</th>
+                        <td>kanri@mycoach-myteam.com<br><span style="font-size:.75rem;color:#94a3b8;">※お問い合わせは原則メールにて承っております。</span></td>
+                    </tr>
+                    <tr>
+                        <th>販売価格</th>
+                        <td>
+                            <p><strong>指導料・支援金：</strong>各ページに表示された金額（税込）</p>
+                            <p style="margin-top:.4rem;"><strong>システム利用料（税込）：</strong></p>
+                            <p>・コーチマッチング（MyCOACH）：取引金額の10%</p>
+                            <p>・月謝決済（MyTEAM）：取引金額の5%</p>
+                            <p>・その他オプション機能：取引金額の2.4%〜20%</p>
+                            <p style="font-size:.75rem;color:#94a3b8;margin-top:.4rem;">※各サービスの詳細ページにて、ご利用前に適用手数料を必ずご確認ください。</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>支払方法・時期</th>
+                        <td>
+                            <p><strong>クレジットカード決済</strong></p>
+                            <p>・都度決済（マッチング等）：契約成立時に決済。</p>
+                            <p>・継続決済（月謝）：初回決済日を基準に毎月自動決済。</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>役務の提供時期</th>
+                        <td>決済完了後、直ちに（または合意した指導日時に）サービスを提供します。</td>
+                    </tr>
+                    <tr>
+                        <th>返品・キャンセル</th>
+                        <td>
+                            <p>デジタルコンテンツおよび役務提供の性質上、決済完了後の利用者都合による返金・キャンセルは原則お受けできません。</p>
+                            <p style="margin-top:.4rem;">ただし、以下の場合は当社規定に基づき返金等の対応を行います。</p>
+                            <p>・指導者の欠席等によりサービスが提供されなかった場合</p>
+                            <p>・当社の責に帰すべき事由によりサービスの提供が不可能となった場合</p>
+                            <p>・その他、消費者契約法その他の法令により返金が認められる場合</p>
+                            <p style="font-size:.75rem;color:#94a3b8;margin-top:.4rem;">※返金をご希望の場合は、事由発生から7日以内にメールにてお問い合わせください。</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Terms -->
+            <div id="content-terms" class="modal-content">
+                <h2 class="modal-h2">利用規約</h2>
+                <p class="modal-date">制定日：2026年2月1日 ｜ 改定日：2026年2月5日</p>
+                <p class="modal-p">この利用規約（以下「本規約」）は、株式会社ark（以下「当社」）が提供する「MyCOACH-MyTEAM」（以下「本サービス」）の利用条件を定めるものです。</p>
+
+                <h4 class="modal-section-h">第1条（適用・登録）</h4>
+                <ul class="modal-ul">
+                    <li>ユーザーは、本規約に同意の上、当社所定の手続きを経て利用登録を行うものとします。</li>
+                    <li>指導者としての登録には、公的証明書による本人確認が必要です。当社は独自の基準で審査を行い、登録を拒否する権利を有します。</li>
+                </ul>
+
+                <h4 class="modal-section-h">第2条（禁止事項）</h4>
+                <p class="modal-p">ユーザーは以下の行為を行ってはなりません。</p>
+                <ul class="modal-ul">
+                    <li>法令、公序良俗に反する行為。</li>
+                    <li><strong>中抜き行為：</strong>本サービスで知り得た相手と、本サービスを介さずに直接金銭の授受や契約を行う行為。発覚した場合、当該取引金額の30%相当額を違約金として請求します。</li>
+                    <li>他のユーザーに対するハラスメント、誹謗中傷、差別的言動。</li>
+                    <li>虚偽の情報を登録・公開する行為。</li>
+                </ul>
+
+                <h4 class="modal-section-h">第3条（決済・エスクロー）</h4>
+                <p class="modal-p">本サービスでは、安全な取引のため「エスクロー決済」を採用しています。</p>
+                <ul class="modal-ul">
+                    <li>チームが支払った指導料は、指導完了まで当社が一時的に管理します。</li>
+                    <li>指導完了報告が承認された後、システム利用料を差し引いた金額が指導者に支払われます。</li>
+                </ul>
+
+                <h4 class="modal-section-h">第4条（MySUPPORTER機能）</h4>
+                <ul class="modal-ul">
+                    <li>本機能は、物品の寄付・支援を仲介するものです。</li>
+                    <li><strong>匿名配送：</strong>支援者とチーム双方の住所を開示せず配送する仕組みを提供しますが、配送事故等により情報が開示されるリスクを完全に排除するものではありません。</li>
+                </ul>
+
+                <h4 class="modal-section-h">第5条（免責事項）</h4>
+                <ul class="modal-ul">
+                    <li><strong>AI解析：</strong>「フードコンディショニング」によるアドバイスは参考情報であり、医学的な診断や指導に代わるものではありません。ご利用の際は専門家にご相談ください。</li>
+                    <li>当社は、ユーザー間のトラブル（指導内容の不一致、事故等）について、当社の故意・重過失がない限り責任を負いません。</li>
+                    <li>本サービスは、システムメンテナンスや不可抗力により、予告なく停止することがあります。</li>
+                </ul>
+
+                <h4 class="modal-section-h">第6条（準拠法・裁判管轄）</h4>
+                <p class="modal-p">本規約は日本法を準拠法とし、本サービスに関する紛争は、東京地方裁判所を第一審の専属的合意管轄裁判所とします。</p>
+            </div>
+
+            <!-- Contact -->
+            <div id="content-contact" class="modal-content flex-center">
+                <div style="width:72px;height:72px;background:#eff6ff;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:1.75rem;margin-bottom:1.5rem;">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+                <h2 class="modal-h2">お問い合わせ</h2>
+                <p class="modal-p" style="margin:.5rem 0 1.75rem;max-width:320px;">導入のご相談、取材のご依頼、その他ご不明点は下記までご連絡ください。</p>
+                <a href="mailto:kanri@mycoach-myteam.com"
+                   style="font-size:1.1rem;font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy);padding-bottom:3px;text-decoration:none;transition:color .2s;"
+                   onmouseover="this.style.color='var(--blue)';this.style.borderBottomColor='var(--blue)'"
+                   onmouseout="this.style.color='var(--navy)';this.style.borderBottomColor='var(--navy)'">
+                    kanri@mycoach-myteam.com
+                </a>
+                <div style="margin-top:2rem;font-size:.78rem;color:#94a3b8;text-align:center;line-height:1.7;">
+                    <a href="https://ymozfleet-creator.github.io/Ark/" target="_blank" style="font-weight:700;color:#64748b;text-decoration:none;">株式会社ark</a><br>
+                    〒165-0023 東京都中野区江原町2-13-13
+                </div>
+            </div>
+
+        </div><!-- /modal-body -->
+    </div><!-- /modal-inner -->
+</div><!-- /modal -->
+
+
+<script>
+    /* === RESPONSIVE NAV === */
+    const pcNav = document.getElementById('pc-nav');
+    const hamburger = document.getElementById('hamburger');
+    function updateNav() {
+        if (window.innerWidth >= 1024) {
+            pcNav.style.display = 'flex';
+            hamburger.style.display = 'none';
+        } else {
+            pcNav.style.display = 'none';
+            hamburger.style.display = 'flex';
         }
-        document.getElementById('info-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
+    }
+    updateNav();
+    window.addEventListener('resize', updateNav);
+
+    function toggleMenu() {
+        const m = document.getElementById('mobile-menu');
+        m.style.display = m.style.display === 'none' ? 'block' : 'none';
+    }
+
+    /* === MODAL === */
+    function openModal(tabId) {
+        const modal = document.getElementById('info-modal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        switchTab(tabId);
+    }
+    function closeModal() {
+        document.getElementById('info-modal').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    function switchTab(tabId) {
+        document.querySelectorAll('.modal-content').forEach(el => {
+            el.classList.remove('active');
         });
-    </script>
+        document.querySelectorAll('.modal-tab').forEach(el => el.classList.remove('active'));
+
+        const content = document.getElementById('content-' + tabId);
+        const tab = document.getElementById('tab-' + tabId);
+        if (content) content.classList.add('active');
+        if (tab) tab.classList.add('active');
+    }
+</script>
 </body>
 </html>
