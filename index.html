@@ -475,10 +475,25 @@
             }
         }
 
-        /* タップターゲット最小44px確保 */
+        /* sp-hide */
+        @media (max-width: 767px) { .sp-hide { display: none; } }
+
+        /* ---------- SERVICE mobile margins ---------- */
+        @media (max-width: 767px) {
+            .service-row-mb { margin-bottom: 3rem !important; }
+        }
         @media (max-width: 767px) {
             .who-link, .btn-service, .footer-links button { min-height: 44px; }
             .who-card { -webkit-tap-highlight-color: transparent; }
+        }
+        /* ---------- HEADER RESPONSIVE (CSS制御) ---------- */
+        #pc-nav    { display: none; }
+        #hamburger { display: flex; }
+
+        @media (min-width: 1024px) {
+            #pc-nav    { display: flex !important; align-items: center; gap: 2rem; }
+            #hamburger { display: none !important; }
+            #mobile-menu { display: none !important; }
         }
     </style>
 </head>
@@ -495,7 +510,7 @@
             </div>
         </a>
 
-        <nav style="display:none;align-items:center;gap:2rem;" id="pc-nav">
+        <nav id="pc-nav" style="align-items:center;gap:2rem;">
             <a href="#for-who"  class="nav-link">ご利用者別</a>
             <a href="#service"  class="nav-link">機能紹介</a>
             <a href="#safety"   class="nav-link">安心・安全</a>
@@ -506,7 +521,7 @@
         </nav>
 
         <button onclick="toggleMenu()" id="hamburger"
-            style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;">
+            style="align-items:center;justify-content:center;width:40px;height:40px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;">
             <i class="fas fa-bars" style="color:#475569;font-size:1.1rem;"></i>
         </button>
     </div>
@@ -543,7 +558,7 @@
         </h1>
 
         <p class="hero-desc a3">
-            指導者マッチング・集金管理・チーム支援を<br>
+            指導者マッチング・集金管理・チーム支援を<br class="sp-hide">
             ひとつのIDで完結。導入費用は<strong style="color:#fff;">完全無料</strong>。
         </p>
 
@@ -551,7 +566,7 @@
             <a href="https://mycoach-myteam.com/" target="_blank" class="btn-hero-primary">
                 <i class="fas fa-rocket"></i> 今すぐ無料登録
             </a>
-            <a href="#service" class="btn-hero-ghost">
+            <a href="#service" class="btn-hero-ghost" style="border-color:rgba(255,255,255,.75);">
                 機能を見る <i class="fas fa-chevron-down"></i>
             </a>
         </div>
@@ -569,7 +584,7 @@
 <section id="for-who" style="background:#fff;padding:5rem 0;">
     <div class="section-wrap">
         <div style="text-align:center;margin-bottom:3rem;">
-            <span class="tag-label">FOR WHO</span>
+            <span class="tag-label">ご利用者別</span>
             <h2 class="section-h2">あなたはどの立場ですか？</h2>
             <p class="section-sub">それぞれの課題に合わせた機能を用意しています</p>
         </div>
@@ -579,10 +594,10 @@
             <!-- Coach -->
             <a href="https://mycoach-myteam.com/" target="_blank" class="who-card">
                 <div class="who-icon" style="background:#eff6ff;color:var(--blue);">
-                    <i class="fas fa-person-running"></i>
+                    <i class="fas fa-chalkboard-user"></i>
                 </div>
                 <div>
-                    <div class="who-role" style="color:var(--blue);">Coach</div>
+                    <div class="who-role" style="color:var(--blue);">コーチ・指導者</div>
                     <div class="who-title">コーチ・指導者の方</div>
                     <div class="who-desc">専門知識を活かして指導案件を受注。登録無料、成功報酬型で気軽に始められます。</div>
                 </div>
@@ -597,7 +612,7 @@
                     <i class="fas fa-users"></i>
                 </div>
                 <div>
-                    <div class="who-role" style="color:var(--navy);">Manager</div>
+                    <div class="who-role" style="color:var(--navy);">チーム運営・顧問</div>
                     <div class="who-title">チーム運営・顧問の方</div>
                     <div class="who-desc">指導者採用・集金管理・連絡網をDX化。現金集金や電話連絡から解放されます。</div>
                 </div>
@@ -612,7 +627,7 @@
                     <i class="fas fa-mobile-alt"></i>
                 </div>
                 <div>
-                    <div class="who-role" style="color:var(--green);">Parent / Player</div>
+                    <div class="who-role" style="color:var(--green);">保護者・選手</div>
                     <div class="who-title">保護者・選手の方</div>
                     <div class="who-desc">月謝のカード払い・スケジュール確認・連絡受信をスマホひとつで管理できます。</div>
                 </div>
@@ -627,7 +642,7 @@
                     <i class="fas fa-gift"></i>
                 </div>
                 <div>
-                    <div class="who-role" style="color:var(--orange);">Supporter</div>
+                    <div class="who-role" style="color:var(--orange);">OB/OG・サポーター</div>
                     <div class="who-title">OB/OG・サポーターの方</div>
                     <div class="who-desc">地域や卒業生から、頑張るチームへ物品支援。住所非公開の匿名配送に対応。</div>
                 </div>
@@ -645,13 +660,13 @@
 <section id="service" style="background:#f8fafc;padding:5rem 0;">
     <div class="section-wrap">
         <div style="text-align:center;margin-bottom:3.5rem;">
-            <span class="tag-label">OUR SOLUTIONS</span>
+            <span class="tag-label">機能紹介</span>
             <h2 class="section-h2">現場を変える3つの機能</h2>
             <p class="section-sub">事務作業の負担を減らし、選手・スタッフと向き合える時間に</p>
         </div>
 
         <!-- ── MyCOACH ── -->
-        <div class="service-row" style="margin-bottom:5rem;">
+        <div class="service-row service-row-mb" style="margin-bottom:5rem;">
             <div class="service-photo-wrap">
                 <!-- コーチがフィールドで選手に直接指導している場面 -->
                 <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=2070&auto=format&fit=crop" alt="コーチによる直接指導" loading="eager" style="width:100%;aspect-ratio:16/10;object-fit:cover;display:block;">
@@ -674,7 +689,7 @@
                         <div class="feature-icon" style="background:#eff6ff;color:var(--blue);"><i class="fas fa-file-contract"></i></div>
                         <div>
                             <div class="feature-name">電子契約・エスクロー決済</div>
-                            <div class="feature-note">書類作成不要。指導完了後に自動支払いのため「払い逃げ」リスクゼロ。</div>
+                            <div class="feature-note">書類作成不要。指導完了後に自動支払いのため「払い逃げ」リスクを大幅に低減します。</div>
                         </div>
                     </div>
 
@@ -686,7 +701,7 @@
         </div>
 
         <!-- ── MyTEAM ── -->
-        <div class="service-row reverse" style="margin-bottom:5rem;">
+        <div class="service-row reverse service-row-mb" style="margin-bottom:5rem;">
             <div class="service-photo-wrap">
                 <!-- チームが集まってミーティング・戦術確認しているシーン -->
                 <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=2070&auto=format&fit=crop" alt="スマートフォンでのチーム管理" loading="eager" style="width:100%;aspect-ratio:16/10;object-fit:cover;display:block;">
@@ -737,7 +752,7 @@
                     <i class="fas fa-gift"></i> MySUPPORTER
                 </span>
                 <h3 class="service-h3">OB・地域から<br>チームへ支援を届ける</h3>
-                <p class="service-desc">必要な備品をAmazonほしい物リストで公開。OB/OGや地域の方々が、ネットショッピング感覚で簡単に物品を寄贈できる仕組みです。</p>
+                <p class="service-desc">必要な備品を楽天のほしいものリストで公開。OB/OGや地域の方々が、ネットショッピング感覚で簡単に物品を寄贈できる仕組みです。</p>
                 <div class="feature-list">
                     <div class="feature-item">
                         <div class="feature-icon" style="background:#fff7ed;color:var(--orange);"><i class="fas fa-user-secret"></i></div>
@@ -768,9 +783,9 @@
 <section id="safety" style="background:#fff;padding:5rem 0;">
     <div class="section-wrap">
         <div style="text-align:center;margin-bottom:3rem;">
-            <span class="tag-label">SAFETY & SECURITY</span>
+            <span class="tag-label">安心・安全への取り組み</span>
             <h2 class="section-h2">安心・安全への取り組み</h2>
-            <p class="section-sub">教育現場での利用を前提とした、厳格な管理体制</p>
+            <p class="section-sub">教育現場での利用を前提とした、適切な管理体制</p>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;max-width:860px;margin:0 auto;">
             <div class="safety-card">
@@ -797,7 +812,7 @@
 <section id="pricing" style="background:#f8fafc;padding:5rem 0;">
     <div class="section-wrap">
         <div style="text-align:center;margin-bottom:3rem;">
-            <span class="tag-label">PRICING</span>
+            <span class="tag-label">料金プラン</span>
             <h2 class="section-h2">シンプルな料金体系</h2>
             <p class="section-sub">初期費用・月額費用は一切かかりません</p>
         </div>
@@ -820,7 +835,7 @@
                             <div class="pricing-note">マッチング成立時のみ発生</div>
                         </div>
                     </div>
-                    <div class="pricing-rate">10%</div>
+                    <div class="pricing-rate">10%〜</div>
                 </div>
                 <div class="pricing-row">
                     <div style="display:flex;align-items:center;gap:.75rem;">
@@ -830,7 +845,7 @@
                             <div class="pricing-note">月謝の決済時のみ発生</div>
                         </div>
                     </div>
-                    <div class="pricing-rate">5%</div>
+                    <div class="pricing-rate">5%〜</div>
                 </div>
                 <div class="pricing-row">
                     <div style="display:flex;align-items:center;gap:.75rem;">
@@ -843,8 +858,8 @@
                     <div class="pricing-rate free">¥0</div>
                 </div>
             </div>
-            <p style="text-align:center;font-size:.75rem;color:#94a3b8;margin-top:1rem;">
-                ※その他オプション機能は取引金額の2.4%〜20%（税込）。各サービス詳細ページにてご確認ください。
+            <p style="text-align:center;font-size:.82rem;color:#64748b;margin-top:1rem;line-height:1.7;">
+                ※その他オプション機能は取引金額の2.4%〜20%（税込）。<br class="sp-hide">各サービス詳細ページにてご確認ください。
             </p>
             <div style="text-align:center;margin-top:2rem;">
                 <a href="https://mycoach-myteam.com/" target="_blank" class="btn-hero-primary" style="font-size:.95rem;">
@@ -998,8 +1013,8 @@
                         <td>
                             <p><strong>指導料・支援金：</strong>各ページに表示された金額（税込）</p>
                             <p style="margin-top:.4rem;"><strong>システム利用料（税込）：</strong></p>
-                            <p>・コーチマッチング（MyCOACH）：取引金額の10%</p>
-                            <p>・月謝決済（MyTEAM）：取引金額の5%</p>
+                            <p>・コーチマッチング（MyCOACH）：取引金額の10%〜</p>
+                            <p>・月謝決済（MyTEAM）：取引金額の5%〜</p>
                             <p>・その他オプション機能：取引金額の2.4%〜20%</p>
                             <p style="font-size:.75rem;color:#94a3b8;margin-top:.4rem;">※各サービスの詳細ページにて、ご利用前に適用手数料を必ずご確認ください。</p>
                         </td>
@@ -1072,7 +1087,7 @@
                 </ul>
 
                 <h4 class="modal-section-h">第6条（準拠法・裁判管轄）</h4>
-                <p class="modal-p">本規約は日本法を準拠法とし、本サービスに関する紛争は、東京地方裁判所を第一審の専属的合意管轄裁判所とします。</p>
+                <p class="modal-p">本規約は日本法を準拠法とし、本サービスに関する紛争は、東京地方裁判所を第一審の合意管轄裁判所とします。ただし、消費者契約法その他の法令により、消費者の住所地を管轄する裁判所への提訴が認められる場合はこの限りではありません。</p>
             </div>
 
             <!-- Contact -->
@@ -1100,24 +1115,9 @@
 
 
 <script>
-    /* === RESPONSIVE NAV === */
-    const pcNav = document.getElementById('pc-nav');
-    const hamburger = document.getElementById('hamburger');
-    function updateNav() {
-        if (window.innerWidth >= 1024) {
-            pcNav.style.display = 'flex';
-            hamburger.style.display = 'none';
-        } else {
-            pcNav.style.display = 'none';
-            hamburger.style.display = 'flex';
-        }
-    }
-    updateNav();
-    window.addEventListener('resize', updateNav);
-
     function toggleMenu() {
         const m = document.getElementById('mobile-menu');
-        m.style.display = m.style.display === 'none' ? 'block' : 'none';
+        m.style.display = m.style.display === 'none' || m.style.display === '' ? 'block' : 'none';
     }
 
     /* === MODAL === */
